@@ -76,7 +76,9 @@ module.exports = {
           {
           loader:'file-loader',
           options:{
-             esModule:false //是否转化成EsModule
+             esModule:false, //是否转化成EsModule
+             name:'[name].[hash:6].[ext]',//图片名称
+             outputPath:'images'
           }
           }
         ]

@@ -44,18 +44,17 @@
 └── README.md               // 项目说明
 ```
 
-# 1.初始化 package.json
+### 1.初始化 package.json
 
 yarn init
 
-## 2.安装 webpack
+### 2.安装 webpack
 
 yarn add -D webpack webpack-cli webpack-merge
 
 webpack-merge 使用说明
 
-分离配置文件
-我们在根目录下创建 config 文件夹，并创建四个配置文件：
++分离配置文件 +我们在根目录下创建 config 文件夹，并创建四个配置文件：
 
 webpack.comm.js 公共环境的配置文件
 webpack.development.js 开发环境下的配置文件
@@ -68,18 +67,17 @@ webpack.parts.js 各个配置零件的配置文件
 
     less(less-loader)-->css-->css-loader
 
-#### 4.到底要兼容那些平台,网站 caniuse.com 可以得到主流浏览器是那些，告诉我们的工具插件怎样兼容那些浏览器
+### 4.到底要兼容那些平台,网站 caniuse.com 可以得到主流浏览器是那些，告诉我们的工具插件怎样兼容那些浏览器
 
-    1.工程化
-     2.兼容性：css ,js
-
-     3.到底要兼容那些平台,网站 caniuse.com可以得到主流浏览器是那些，告诉我们的工具插件怎样兼容那些浏览器
-     4.建立.browserslistrc文件，里面设置兼容浏览器的设置如下，条件符合后就会知道兼容那些浏览器
+    +.工程化
+    +.兼容性：css ,js
+    +.到底要兼容那些平台,网站 caniuse.com可以得到主流浏览器是那些，告诉我们的工具插件怎样兼容那些浏览器
+    +.建立.browserslistrc文件，里面设置兼容浏览器的设置如下，条件符合后就会知道兼容那些浏览器
           > 1%
           last 2 version
           not dead
 
-##### 5.css 兼容性处理：postcss --> postcss-loader postcss-preset-env
+### 5.css 兼容性处理：postcss --> postcss-loader postcss-preset-env
 
 +.yarn add -D postcss
 
@@ -110,7 +108,7 @@ webpack.parts.js 各个配置零件的配置文件
 yarn add -D postcss-preset-env
 +.建立 postcss.config.js 文件用来复用插件
 
-###### 6 importLoader 属性
+### 6 importLoader 属性
 
 为了让 css-loader 重新再加载@import 的文件，相当于再调下面的  postcss-loader 一次
 如果下面还有别的 loader 就改数值为 2
@@ -123,16 +121,23 @@ importLoaders : 1
 }
 }
 
-###### 7 file-loader 处理图片，将图片当一个模块对待
+### 7 file-loader 处理图片，将图片当一个模块对待
 
 yarn add -D file-loader
-图片：
+
+图片处理：
 -->img src
 
-+使用 require 导入图片，需要设置 esModule:false
+使用 require 导入图片，需要设置 esModule:false
 
-- 采用 import xxx from ‘xxx'导入图片
-  -->background url
+采用 import xxx from ‘xxx'导入图片
+-->background url
+
+图片 options 配制说明：
+[ext]:扩展名
+[name]:文件名
+[hash]:文件内容
+[hash:<length>]:hash 值长度
 
 ### 3.配置 Html 模板
 
