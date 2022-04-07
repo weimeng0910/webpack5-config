@@ -1,4 +1,4 @@
-#🌈 🚀 基于 webpack4.0 从零搭建的 React cookbooks。🚀
+#🌈 🚀 基于 webpack5.0 从零搭建的 React cookbooks。🚀
 
 # 技术栈
 
@@ -35,6 +35,7 @@
 │   ├── index.html          // 入口html页面
 │   └── main.js             // 项目入口文件
 ├── .babelrc                // babel配置
+├── .browserslistrc         // 浏览器过滤规则配置
 ├── .editorconfig           // 项目格式配置
 ├── .eslintrc.js            // ESLint配置
 ├── .gitignore              // git 忽略配置
