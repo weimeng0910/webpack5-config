@@ -46,11 +46,11 @@
 
 ### 1.初始化 package.json
 
-yarn init
+初始化安装：yarn init
 
 ### 2.安装 webpack
 
-yarn add -D webpack webpack-cli webpack-merge
+安装：yarn add -D webpack webpack-cli webpack-merge
 
 webpack-merge 使用说明
 
@@ -63,7 +63,7 @@ webpack.parts.js 各个配置零件的配置文件
 
 ### 3.安装 css 的处理 loader，less-loader,style-loader
 
-    yarn  add -D css-loadr less less-loader style-loader
+    安装：yarn  add -D css-loadr less less-loader style-loader
 
     less(less-loader)-->css-->css-loader
 
@@ -79,13 +79,14 @@ webpack.parts.js 各个配置零件的配置文件
 
 ### 5.css 兼容性处理：postcss --> postcss-loader postcss-preset-env
 
-+.yarn add -D postcss
+安装：yarn add -D postcss
 
-+.yarn add -D postcss-cli 作用是在终瑞使用 postcss 命令
+安装：yarn add -D postcss-cli 作用是在终瑞使用 postcss 命令
 
-+.yarn add -D autoprefixe
+安装：yarn add -D autoprefixe
 在命令窗口输入 npx postcss --use autoprefixer -o ret.css ./src/css/test.css
-+.yarn add -D postcss-loader
+
+安装：yarn add -D postcss-loader
 
 网站示例：autoprefixer.github.io
 
@@ -105,7 +106,7 @@ webpack.parts.js 各个配置零件的配置文件
              }
 
 3.预设--插件的集合
-yarn add -D postcss-preset-env
+安装：安装：yarn add -D postcss-preset-env
 +.建立 postcss.config.js 文件用来复用插件
 
 ### 6 importLoader 属性
@@ -123,7 +124,7 @@ importLoaders : 1
 
 ### 7 file-loader 处理图片，将图片当一个模块对待
 
-yarn add -D file-loader
+安装：yarn add -D file-loader
 
 图片处理：
 -->img src
@@ -139,12 +140,72 @@ yarn add -D file-loader
 [hash]:文件内容
 [hash:<length>]:hash 值长度
 
-### 3.配置 Html 模板
+### 8 url-loader 处理图片
 
-安装：yarn add -D html-webpack-plugin
+安装：yarn add -D url-loader
 
-#### 4.配置本地服务及热更新
+    url-loader 与 file-loader 的区别
 
-yarn add -D webpack-dev-server clean-webpack-plugin
+    url-loader base64 url文件当中，减少请求次数
 
-开发环境利用 webpack-dev-server 搭建本地 web server，并启用模块热更新(HMR)。
+    file-loader 将资源拷贝到指定目录，分开请求
+
+    url-loader可以调用file-loader，通过limit设置
+        图片大小小于8kb，就会被base64处理
+        优点: 减少请求数量（减轻服务器压力）
+        缺点：图片体积会更大（文件请求速度更慢）
+
+    解决：关闭url-loader的ES6模块化，使用commonjs解析
+         esModule: false
+
+### 9.配置 asset module type 替换 url-loader 与 file-loader 的配制
+
+    注意：这是webpack5后新出的配制项，因为webpack内置了所以不需要安装
+    常用配制：
+
+    {
+        //3.图片的处理 |jpg|png|gif资源
+        test: /\.(svg|png|gif|jpe?g)$/,
+        type:'asset',
+        generator:{
+          filename:"images/[name].[hash:6][ext]"
+        },
+        parser:{
+          dataUrlCondition:{
+            maxSize: 30 * 1024
+          }
+        }
+      }
+
+    asset/resource  -->这个配制项等同于file-loader
+
+
+    {
+
+        test: /\.(svg|png|gif|jpe?g)$/,
+        type:'asset/resource',
+        generator:{
+          filename:"images/[name].[hash:6][ext]"
+        }
+      }
+
+    asset/inline    -->等同于url-loader
+    {
+
+        test: /\.(svg|png|gif|jpe?g)$/,
+        type:'asset/inline
+
+      }
+
+    asset/source    -->raw-loader
+
+### 10.webpack 通过 asset 配制字体，图标资源
+
+    webpack5按照以下配制字体图标资源
+       {
+        test:/\.(ttf|woff|eot|svg)$/,
+        type:'asset/resource',
+        generator:{
+          filename:"fonts/[name].[hash:6][ext]"
+        }
+      }

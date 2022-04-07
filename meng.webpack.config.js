@@ -69,19 +69,40 @@ module.exports = {
           'less-loader',
         ]
       },
+      //3.图片的处理
       {
-        //3.图片的处理 |jpg|png|gif资源
+        
         test: /\.(svg|png|gif|jpe?g)$/,
-        use:[
-          {
-          loader:'file-loader',
-          options:{
-             esModule:false, //是否转化成EsModule
-             name:'[name].[hash:6].[ext]',//图片名称
-             outputPath:'images'
+        type:'asset',
+        generator:{
+          filename:"images/[name].[hash:6][ext]"
+        },
+        parser:{
+          dataUrlCondition:{
+            maxSize: 30 * 1024
           }
-          }
-        ]
+        }
+
+        //webpack5不再使用下面配制
+        // use:[
+        //   {
+        //   loader:'url-loader',
+        //   options:{
+        //     limit: 8 * 1024,
+        //      esModule:false, //是否转化成EsModule
+        //      name:'[name].[hash:6].[ext]',//图片名称
+        //      outputPath:'images'
+        //   }
+        //   }
+        // ]
+      },
+      //4.字体图标的处理
+      {
+        test:/\.(ttf|woff|eot|svg)$/,
+        type:'asset/resource',
+        generator:{
+          filename:"fonts/[name].[hash:6][ext]"
+        }
       }
     ]
   },
