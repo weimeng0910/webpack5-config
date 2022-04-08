@@ -14,7 +14,8 @@ const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = {
   // webpack配置
-  
+  mode:"development",
+  devtool:false,
   // 入口起点
   entry:'./src/index.js',
   
@@ -110,6 +111,12 @@ module.exports = {
         generator:{
           filename:"fonts/[name].[hash:6][ext]"
         }
+      },
+      //5.-->babel-loader
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use:['babel-loader'] 
       }
     ]
   },
@@ -122,7 +129,7 @@ module.exports = {
 
     //2.html-webpack-plugin  
     new HtmlWebpackPlugin({
-      title: '铁木真大屏展示',
+      title: 'webpack5',
       template: path.resolve(__dirname, './public/index.html'),
       filename: 'index.html'
     }),

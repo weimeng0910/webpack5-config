@@ -33,13 +33,13 @@
 │   ├── styles              // 存放公共样式
 │   ├── utils               // 工具库/通用函数
 │   ├── index.html          // 入口html页面
-│   └── main.js             // 项目入口文件
-├── .babelrc                // babel配置
-├── .browserslistrc         // 浏览器过滤规则配置
+│   └── index.js            // 项目入口文件
+├── .babel.config.js        // babel配置,依赖什么样的插件
+├── .browserslistrc         // 浏览器过滤规则配置,babel依赖这个文件，同样css也依赖
 ├── .editorconfig           // 项目格式配置
 ├── .eslintrc.js            // ESLint配置
 ├── .gitignore              // git 忽略配置
-├── .postcssrc.js           // postcss配置
+├── .postcssrc.js           // postcss配置,依赖什么样的插件
 ├── package.json            // 依赖包配置
 └── README.md               // 项目说明
 ```
@@ -107,22 +107,22 @@ webpack.parts.js 各个配置零件的配置文件
 
 3.预设--插件的集合
 安装：安装：yarn add -D postcss-preset-env
-+.建立 postcss.config.js 文件用来复用插件
+建立 postcss.config.js 文件用来复用插件
 
-### 6 importLoader 属性
+### 6. importLoader 属性
 
 为了让 css-loader 重新再加载@import 的文件，相当于再调下面的  postcss-loader 一次
 如果下面还有别的 loader 就改数值为 2
 {
 
-loader:'css-loader',
-options: {
+        loader:'css-loader',
+        options: {
 
-importLoaders : 1
-}
-}
+             importLoaders : 1
+        }
+     }
 
-### 7 file-loader 处理图片，将图片当一个模块对待
+### 7. file-loader 处理图片，将图片当一个模块对待
 
 安装：yarn add -D file-loader
 
@@ -140,7 +140,7 @@ importLoaders : 1
 [hash]:文件内容
 [hash:<length>]:hash 值长度
 
-### 8 url-loader 处理图片
+### 8.url-loader 处理图片
 
 安装：yarn add -D url-loader
 
@@ -164,7 +164,7 @@ importLoaders : 1
     常用配制：
 
     {
-        //3.图片的处理 |jpg|png|gif资源
+
         test: /\.(svg|png|gif|jpe?g)$/,
         type:'asset',
         generator:{
@@ -231,3 +231,41 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
 
 针对 命令行友好提示需要安装下面插件
 安装：yarn add -D friendly-errors-webpack-plugin
+
+### 13.配置 Babel 实现 JS 的兼容操做
+
+安装：yarn add -D babel-loader @babel/core @babel/preset-env
+
+     功能：Babel 是一个 JavaScript 编译器，识别 JSX ES6+ TS 转换 ES5 代码，让你使用最新的语言特性而不用担心兼容性问题，并且可以通过插件机制根据需求灵活的扩展
+     1.babel-loader - 使用Babel和webpack转译文件
+     2.@babel/core - 转译ES2015+的代码
+     3.@babel/preset-env 插件的集合
+     4.在 Babel 执行编译的过程中，会从项目根目录下的配置文件读取配置。在根目录下创建Babel的配置文件babel.config.js(json cjs mjs)多包管理，简化webpack.config中的配制
+     5.还可以建立babelrc.json(以前的方式)
+     6.在根目录下建立文件.gitignore排除babel对node_modules文件和dist目录进行再检查
+
+### 14.polyfill 配制的操做实再 JS 兼容的补充(生产依赖)
+
+安装：yarn add core-js regenerator-runtime
+
+     说明：对更新的语法进行兼容，例如 promise ，在webpack5之前不用处理，因为现在webpack5去除了polyfill
+     配制：在babel.config.js中配制如下
+     module.exports = {
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                // 按需加载
+                //false 不对当前的JS做polyfill填充
+                //usage 依据用户当前使用的新语法填充
+                //entry 依据我们筛选的浏览器填充
+                useBuiltIns: 'usage',
+                // 指定core-js版本，默认是 2 会报错
+                corejs: 3
+              }
+
+            ]
+
+          ]
+
+        };

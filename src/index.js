@@ -1,12 +1,12 @@
 import './css/index.less'
-import './css/test.css'
-import './js/Images'
-import './js/Font'
 
-// import React from 'react'
-// import ReactDOM from 'react-dom'
+const foo = () => { 
+  console.log('111')
 
-// ReactDOM.render(
-//   <h1>Hello, world!</h1>,
-//   document.getElementById('app')
-// )
+ };
+foo();
+
+const p1= new Promise((resolve,reject)=>{
+   console.log('111')
+});
+console.log(p1);
