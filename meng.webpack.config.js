@@ -5,7 +5,12 @@ const path = require('path');
 //path.resolve() 该方法将一些的 路径/路径段 解析为绝对路径。
 //两者区别：join是把各个path片段连接在一起， resolve把‘／'当成根目录
 // __dirname nodejs的变量，代表当前文件的目录绝对路径
-// const srcDir = path.join(__dirname, '../src');
+const srcDir = path.join(__dirname, '../src');
+const { DefinePlugin } = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const  HtmlWebpackPlugin = require('html-webpack-plugin');
+// const ReactRootPlugin = require('html-webpack-root-plugin');
+const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = {
   // webpack配置
@@ -37,10 +42,10 @@ module.exports = {
         test: /\.css$/,
         // use数组中loader执行顺序：从右到左，从下到上 依次执行
         use: [
-           'style-loader',
-          
+          {
+            loader:'style-loader',
           // 创建style标签，将js中的样式资源插入进行，添加到head中生效
-          // 'style-loader'
+          },
           {
             loader:'css-loader',
             options: {
@@ -52,7 +57,9 @@ module.exports = {
 
             }
           },
-            'postcss-loader'
+          {
+            loader:'postcss-loader'
+          }
             
         ] 
       },
@@ -106,23 +113,27 @@ module.exports = {
       }
     ]
   },
+
   // plugins的配置
   plugins: [
     // plugins的配置
-    // html-webpack-plugin
-    // 功能：默认会创建一个空的HTML，自动引入打包输出的所有资源（JS/CSS）
-    // 需求：需要有结构的HTML文件
-    // new HtmlWebpackPlugin({
-    //   //以这个目录下的文件为模板，复制这个文件
-    //   template: `${srcDir}/index.html`,
-    //   // 压缩html代码
-    //   minify: {
-    //     // 移除空格
-    //     collapseWhitespace: true,
-    //     // 移除注释
-    //     removeComments: true
-    //   }
-    // }),
+    //1.删除/清理构建文件夹的 webpack 插件
+    new CleanWebpackPlugin(),
+
+    //2.html-webpack-plugin  
+    new HtmlWebpackPlugin({
+      title: '铁木真大屏展示',
+      template: path.resolve(__dirname, './public/index.html'),
+      filename: 'index.html'
+    }),
+    //3.设置常量
+    new DefinePlugin({
+      BASE_URL: '"./"'//设置和index.html同级路径，小坑，这里再加上“”
+    }),
+
+    //4.命令行友好提示
+    new friendlyErrorsWebpackPlugin(),
+    // new ReactRootPlugin()
     // new MiniCssExtractPlugin({
     //   // 对输出的css文件进行重命名
     //   filename: 'css/built.css'

@@ -209,3 +209,25 @@ importLoaders : 1
           filename:"fonts/[name].[hash:6][ext]"
         }
       }
+
+### 11.clean-webpack-plugin
+
+安装：yarn add -D clean-webpack-plugin
+
+    注意： 每一个plugin本身就是一个类
+    功能：一个用于删除/清理构建文件夹的 webpack 插件
+        此插件将output.path在每次成功重建后删除 webpack 目录中的所有文件
+
+### 12.配置 Html 模板 html-webpack-plugin
+
+安装：yarn add -D html-webpack-plugin
+
+    功能：默认会动态的在dist目录中创建一个空的HTML，自动引入打包输出的所有资源（JS/CSS）
+    需求：需要有结构的HTML文件
+
+针对 public 文件夹中 index.html 页面中出现的常量使用
+DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
+通过 const {DefinePlugin}=require('webpack') 导入
+
+针对 命令行友好提示需要安装下面插件
+安装：yarn add -D friendly-errors-webpack-plugin
