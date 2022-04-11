@@ -1,12 +1,14 @@
-import './css/index.less'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
-const foo = () => { 
-  console.log('111')
+import App from './App.jsx'
+import './css/index.less';
+import './js/Font';
 
- };
-foo();
 
-const p1= new Promise((resolve,reject)=>{
-   console.log('111')
-});
-console.log(p1);
+
+if (module.hot) {
+  module.hot.accept(['./js/Font.js',] )
+}
+
+ReactDOM.createRoot(document.getElementById('app')).render(<App />)

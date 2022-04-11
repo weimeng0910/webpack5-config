@@ -9,5 +9,6 @@ function packFont() {
       return oEle;
   
 };
-
+console.log('font3eee');
 document.body.appendChild(packFont());
+

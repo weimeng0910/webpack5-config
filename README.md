@@ -5,7 +5,7 @@
 涉及的技术栈均采用当前最新的版本和语法：
 
 - 使用 Webpack5.0 构建项目（不使用 create-react-app、umi 等脚手架）；
-- 使用 Babel7 配置转换 ES6、React、Mobx 等语法；
+- 使用 Babel8 配置转换 ES6、React、Mobx 等语法；
 - React 版本 V17.0.1，全部采用函数化 Hooks 特性开发项目组件；
 - 采用 React-router5 工具 配置项目路由；
 - 采用 Mobx5 + Hooks 实现项目数据状态管理；
@@ -269,3 +269,70 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
           ]
 
         };
+
+### 15.copy-webpack-plugin 将已存在的单个文件或整个目录复制到构建目录。
+
+安装：yarn add -D copy-webpack-plugin
+
+     说明：对public文件夹中的文件在打包时复制文件
+     导入：const CopyPlugin = require("copy-webpack-plugin");
+          new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: "public",//目标源文件
+          globOptions:{//排除的文件，因为public中已经有index.html会和上面的插件中的index.html文件重复报错
+            ignore:['**/index.html']//忽略index.html,小坑必须加上**/
+          }
+        }
+
+      ],
+    }),
+
+### 16.webpack-dev-server 搭建本地服务器
+
+安装：yarn add -D webpack-dev-server
+
+      说明：自动更新有两种方法，第一种如下：
+      在 package.json 中配制--watch,进入监控模式，但效率不是最优，因为所有代码都需要重新编译，每次编译后都需要文件读写
+      "build": "webpack --config meng.webpack.config.js --watch
+
+      第二种方法配制服务器模式：
+      开发服务器devServer:用来自动化（自动编译，自动打开浏览器，自动刷新浏览器）
+      特点：只会在内存编译打包，不会有任何输出
+      启动devServer指令为：npx webpack-dev-server
+      在 package.json 中配制 "serve": "webpack serve  --config meng.webpack.config.js"
+
+### 17.webpack-dev-middleware
+
+安装： yarn add -D express
+
+      yarn add -D webpack-dev-middleware
+
+        说明：在开发中追求自由度更高的一些操做，与 webpack 包一起使用的 express 样式的开发中间件,仅用于开发
+          -->没有文件写入磁盘，而是处理内存中的文件
+          -->如果文件在监视模式下更改，中间件会延迟请求，直到编译完成。
+          -->支持热模块重载（HMR）。
+
+### 18.HMR 使用(Hot Module Replacement)
+
+        说明：HMR 不适用于生产环境，这意味着它应当用于开发环境
+            target:'web',//防止和.browserslistrc文件配制冲突
+              //热模块开启
+              devServer:{
+                //热更新
+                hot:true,
+                //端口号
+                port:3000,
+                //自动打开浏览器
+                open:true
+              },
+
+### 19.React 组件支持 HMR
+
+    说明：第一步支持react项目的打包（jsx的支持需要babel-loader)
+    安装： yarn add -D @babel/core --dev @babel/preset-react @babel/preset-env
+    安装:  yarn add -D react react-dom
+     @babel/preset-react是转换jsx语法的包
+
+    第二步支持react项目的热更新
+    安装:yarn add -D @pmmmwh/react-refresh-webpack-plugin react-refresh

@@ -11,6 +11,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const  HtmlWebpackPlugin = require('html-webpack-plugin');
 // const ReactRootPlugin = require('html-webpack-root-plugin');
 const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   // webpack配置
@@ -18,7 +19,6 @@ module.exports = {
   devtool:false,
   // 入口起点
   entry:'./src/index.js',
-  
   // 输出
   output: {
     // 输出文件名
@@ -27,7 +27,16 @@ module.exports = {
     // __dirname nodejs的变量，代表当前文件的目录绝对路径
     path: path.resolve(__dirname, 'dist')
   },
-
+  target:'web',//防止和.browserslistrc文件配制冲突
+  //热模块开启
+  devServer:{
+    //热更新
+    hot:true,
+    //端口号
+    port:3000,
+    //自动打开浏览器
+    open:true
+  },
 
   // loader的配置
   module: {
@@ -114,13 +123,13 @@ module.exports = {
       },
       //5.-->babel-loader
       {
-        test: /\.js$/,
+        test: /\.(js|jsx?)$/,
         exclude: /node_modules/,
         use:['babel-loader'] 
       }
     ]
   },
-
+  
   // plugins的配置
   plugins: [
     // plugins的配置
@@ -140,14 +149,25 @@ module.exports = {
 
     //4.命令行友好提示
     new friendlyErrorsWebpackPlugin(),
-    // new ReactRootPlugin()
+    // 5.拷贝目录
+    new CopyWebpackPlugin({
+      patterns: [
+        { 
+          from: "public",//目标源文件
+          globOptions:{//排除的文件，因为public中已经有index.html会和上面的插件中的index.html文件重复报错
+            ignore:['**/index.html']//忽略index.html,小坑必须加上**/
+          }
+        }
+        
+      ],
+    }),
     // new MiniCssExtractPlugin({
     //   // 对输出的css文件进行重命名
     //   filename: 'css/built.css'
     // }),
     //压缩css
     // new OptimizeCssAssetsWebpackPlugin()
-  ],
+  ]
   // 模式
   //mode: 'development', // 开发模式
    //mode: 'production',
@@ -155,13 +175,5 @@ module.exports = {
   //开发服务器devServer:用来自动化（自动编译，自动打开浏览器，自动刷新浏览器）
   //特点：只会在内存编译打包，不会有任何输出
   //启动devServer指令为：npx webpack-dev-server
-  // devServer:{
-  //   contentBase:resolve(__dirname,'build'),
-  //   //启动gzip压缩
-  //   compress:true,
-  //   //端口号
-  //   port:3000,
-  //   //自动打开浏览器
-  //   open:true
-  // }
+  
 };
