@@ -25,7 +25,7 @@ module.exports = {
   devtool: 'inline-cheap-source-map',
 
   // 入口起点
-  entry:'./src/index.ts',
+  entry:'./src/index.js',
   //解析模块的规则resolve
   resolve: {
     //配制省略文件路径的后缀名，extensions（翻译：扩展）
@@ -199,19 +199,7 @@ module.exports = {
       ],
     }),
     new ReactRefreshWebpackPlugin()
-    // new MiniCssExtractPlugin({
-    //   // 对输出的css文件进行重命名
-    //   filename: 'css/built.css'
-    // }),
-    //压缩css
-    // new OptimizeCssAssetsWebpackPlugin()
+    
   ]
-  // 模式
-  //mode: 'development', // 开发模式
-   //mode: 'production',
-
-  //开发服务器devServer:用来自动化（自动编译，自动打开浏览器，自动刷新浏览器）
-  //特点：只会在内存编译打包，不会有任何输出
-  //启动devServer指令为：npx webpack-dev-server
   
 };

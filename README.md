@@ -415,3 +415,19 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
 
 安装 yarn add typescript --dev
 安装 yarn add ts-loader --dev
+
+### 24.按照模式来分离配制文件
+
+    说明：1.建立config文件夹，创建下面文件
+        --> webpack.comm.js
+        --> webpack.development.js
+        --> webpack.production.js
+
+         2.在package.json中设置指向webpack.comm.js
+         --> "build": "webpack --config ./config/webpack.comm.js --env production",
+         --> "serve": "webpack serve  --config ./config/webpack.comm.js --env development"
+
+         3.对拆分的配制按照需求合并
+         安装 yarn add -D webpack-merge
+         --> 根据获得的env的值进行判断后合并
+         --> 解决路径问题，配制文件进入config文件夹中的路径问题

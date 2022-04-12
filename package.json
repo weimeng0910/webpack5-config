@@ -42,8 +42,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config meng.webpack.config.js",
-    "serve": "webpack serve  --config meng.webpack.config.js"
+    "build": "webpack --config ./config/webpack.comm.js --env production",
+    "serve": "webpack serve  --config ./config/webpack.comm.js --env development"
   },
   "dependencies": {
     "core-js": "^3.21.1",
