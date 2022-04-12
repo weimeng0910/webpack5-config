@@ -12,6 +12,8 @@ const  HtmlWebpackPlugin = require('html-webpack-plugin');
 // const ReactRootPlugin = require('html-webpack-root-plugin');
 const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+//react热更新
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = {
   // webpack配置
@@ -25,17 +27,26 @@ module.exports = {
     filename: 'js/main.js',
     // 输出路径
     // __dirname nodejs的变量，代表当前文件的目录绝对路径
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    //publicPath:''
+
+
   },
   target:'web',//防止和.browserslistrc文件配制冲突
   //热模块开启
   devServer:{
     //热更新
-    hot:true,
+    hot: "only",
+    //防止某一个组件更新后引起所有组件更新，v4已经废弃
+    // hotOnly: true,
     //端口号
-    port:3000,
-    //自动打开浏览器
-    open:true
+    port: 3000,
+    //自动打开浏览器,设为false防止每次都打开新的窗口
+    open: false,
+    //是否为每个静态文件启动gzip压缩 也可以使用命令：npx webpack serve --compress
+     compress:true,
+     //把404页面转换成index.html
+     historyApiFallback: true
   },
 
   // loader的配置
@@ -161,6 +172,7 @@ module.exports = {
         
       ],
     }),
+    new ReactRefreshWebpackPlugin()
     // new MiniCssExtractPlugin({
     //   // 对输出的css文件进行重命名
     //   filename: 'css/built.css'

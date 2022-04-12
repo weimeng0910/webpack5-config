@@ -13,9 +13,12 @@ module.exports = {
       }
         
     ],
-    ['@babel/preset-react']
+    ['@babel/preset-react'],
+
     // '@babel/preset-typescript',
     // '@emotion/babel-preset-css-prop',
   ],
-  // plugins: ['@emotion/babel-plugin'],
+   plugins: [
+     ['react-refresh/babel']
+   ],
 };

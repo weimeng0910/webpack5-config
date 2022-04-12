@@ -336,3 +336,38 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
 
     第二步支持react项目的热更新
     安装:yarn add -D @pmmmwh/react-refresh-webpack-plugin react-refresh
+    配制：在babel.config.js中配制如下
+    plugins: [
+     ['react-refresh/babel']
+
+     ],
+     在webpack.config.js中配制如下
+     const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+     new ReactRefreshWebpackPlugin()
+
+### 20.devServer 的详细配制
+
+    常用配置：
+          devServer:{
+              //热更新
+              hot: "only",
+              //防止某一个组件更新后引起所有组件更新，在V4里已经废弃
+              <!-- hotOnly: true, -->
+              //端口号
+              port: 3000,
+              //自动打开浏览器,设为false防止每次都打开新的窗口
+              open: false,
+              //是否为每个静态文件启动gzip压缩 也可以使用命令：npx webpack serve --compress
+              compress:true
+            },
+      说明：在开发状态下，点击路由后如果刷新浏览器会现 Cannot GET/about ,这个问题需要
+      对devServer.historyApiFallback 进行监控，devServer.historyApiFallback可以帮助我们把404的页面
+      转为index.html设置如下：historyApiFallback: true,
+      通过提供一个对象，这种行为可以通过像 rewrites 这样的配置项进一步控制：
+        historyApiFallback: {
+          rewrites: [
+            { from: /^\/$/, to: '/views/landing.html' },
+            { from: /^\/subpage/, to: '/views/subpage.html' },
+            { from: /./, to: '/views/404.html' },
+          ],
+        },
