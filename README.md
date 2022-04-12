@@ -349,25 +349,69 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
 
     常用配置：
           devServer:{
-              //热更新
-              hot: "only",
-              //防止某一个组件更新后引起所有组件更新，在V4里已经废弃
-              <!-- hotOnly: true, -->
-              //端口号
-              port: 3000,
-              //自动打开浏览器,设为false防止每次都打开新的窗口
-              open: false,
-              //是否为每个静态文件启动gzip压缩 也可以使用命令：npx webpack serve --compress
-              compress:true
-            },
-      说明：在开发状态下，点击路由后如果刷新浏览器会现 Cannot GET/about ,这个问题需要
-      对devServer.historyApiFallback 进行监控，devServer.historyApiFallback可以帮助我们把404的页面
-      转为index.html设置如下：historyApiFallback: true,
-      通过提供一个对象，这种行为可以通过像 rewrites 这样的配置项进一步控制：
-        historyApiFallback: {
-          rewrites: [
-            { from: /^\/$/, to: '/views/landing.html' },
-            { from: /^\/subpage/, to: '/views/subpage.html' },
-            { from: /./, to: '/views/404.html' },
-          ],
-        },
+                //热更新
+                hot: "only",
+                //防止某一个组件更新后引起所有组件更新，v4已经废弃
+                // hotOnly: true,
+                //端口号
+                port: 3000,
+                //自动打开浏览器,设为false防止每次都打开新的窗口
+                open: false,
+                //是否为每个静态文件启动gzip压缩 也可以使用命令：npx webpack serve --compress
+                compress:true,
+                //把404页面转换成index.html
+                historyApiFallback: true,
+                //告诉本地服务从哪里提供内容且只有在您想要提供静态文件时才需要这样做
+                //其实就是index.html所在的目录
+                static: {
+                  directory: path.join(__dirname,  'public')
+                },
+              },
+            首先明白两点:
+            1.在webpack.config.js文件中，output配置只在production环境下起效，devServer只在development环境下有效。
+            2.devServer运行下所编译的文件皆存在于内存中，不会改变本地文件。在服务运行中如果内存中找不到想要的文件时，devServer 会根据文件的路径尝试去本地磁盘上找，如果这样还找不到才会 404
+
+            说明：在开发状态下，点击路由后如果刷新浏览器会现 Cannot GET/about ,这个问题需要
+            对devServer.historyApiFallback 进行监控，devServer.historyApiFallback可以帮助我们把404的页面
+            转为index.html设置如下：historyApiFallback: true,
+            通过提供一个对象，这种行为可以通过像 rewrites 这样的配置项进一步控制：
+              historyApiFallback: {
+                rewrites: [
+                  { from: /^\/$/, to: '/views/landing.html' },
+                  { from: /^\/subpage/, to: '/views/subpage.html' },
+                  { from: /./, to: '/views/404.html' },
+                ],
+              },
+
+### 21.proxy 代理设置
+
+     说明：1.在开发阶段来解决跨域问题，index.html页面当中需要其它数据，然尔这些数据在另外的服务器瑞口上
+          2.在开发阶段下，后瑞接口在另一个服务瑞口，当前开发在瑞口3000下，通过代理来接决（服务瑞对服务端不存在跨域问题）
+
+### 22.解析 resolve
+
+      说明：1.对文件后缀名有效解释,配置如何解析模块。例如，import 'lodash'在 ES2015 中调用时，resolve选项可以改变 webpack 去哪里寻找'lodash'
+           2.解析别名,更轻松地为某些模块import或某些模块创建别名
+              解析模块的规则resolve
+              resolve: {
+                  //配制省略文件路径的后缀名，extensions（翻译：扩展）
+                  extensions: ['.jsx', '.ts', '.tsx', '.js'],
+                  //配制解析模块的路径别名;简写路径，缺点是没有提示
+                  alias: {
+                    '@': path.resolve(__dirname, 'src'),
+                  },
+                },
+
+### 22.source-map 的作用
+
+      说明：source-map是一种映射的技术，依据打包后代码，返还成我们编写的代码
+            在开发环境下，真实的浏览器中的代码和我们编写的代码存在差异，
+            source-map对打包后输出的错误更好的查找！更好的定位到源代码中的错误。
+      设置；此选项控制是否生成，以及如何生成 source map
+            自已开发时用下面这个配置
+            devtool: 'inline-cheap-source-map',
+
+### 23.ts-loader 编译 TS
+
+安装 yarn add typescript --dev
+安装 yarn add ts-loader --dev

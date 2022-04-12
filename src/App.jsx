@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { BrowserRouter,Routes,Link,Route}from 'react-router-dom';
-import Home from "./components/Home.jsx";
-import About from "./components/About.jsx";
+import Home from "@/components/Home";
+import About from "@/components/About";
  function App() {
   // 声明一个叫 "count" 的 state 变量
   const [count, setCount] = useState(0);

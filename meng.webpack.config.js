@@ -16,11 +16,25 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = {
-  // webpack配置
+
+  // 提供 mode 配置选项，告知 webpack 使用相应模式的内置优化。
   mode:"development",
-  devtool:false,
+
+  //此选项控制是否生成，以及如何生成 source map
+  //自已开发时用下面这个配置
+  devtool: 'inline-cheap-source-map',
+
   // 入口起点
-  entry:'./src/index.js',
+  entry:'./src/index.ts',
+  //解析模块的规则resolve
+  resolve: {
+    //配制省略文件路径的后缀名，extensions（翻译：扩展）
+    extensions: ['.jsx', '.ts', '.tsx', '.js'],
+    //配制解析模块的路径别名;简写路径，缺点是没有提示
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
   // 输出
   output: {
     // 输出文件名
@@ -46,7 +60,12 @@ module.exports = {
     //是否为每个静态文件启动gzip压缩 也可以使用命令：npx webpack serve --compress
      compress:true,
      //把404页面转换成index.html
-     historyApiFallback: true
+     historyApiFallback: true,
+     //告诉本地服务从哪里提供内容且只有在您想要提供静态文件时才需要这样做
+     //其实就是index.html所在的目录
+     static: {
+      directory: path.join(__dirname,  'public')
+    },
   },
 
   // loader的配置
@@ -137,7 +156,14 @@ module.exports = {
         test: /\.(js|jsx?)$/,
         exclude: /node_modules/,
         use:['babel-loader'] 
-      }
+      },
+      //6.配置ts-loader
+    {
+      test:/\.(ts|tsx?)$/,
+      exclude: /node_modules/,
+      use:['ts-loader'] 
+
+    }
     ]
   },
   
