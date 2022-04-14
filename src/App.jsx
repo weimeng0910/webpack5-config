@@ -17,7 +17,7 @@ import About from "@/components/About";
       <Link to="/about">关于</Link>
       <Routes>
         
-        
+        <Route path="/" element={<Home />} />
         <Route path='home' element={<Home/>}></Route>
         <Route path='/about' element={<About />}></Route>
         </Routes>

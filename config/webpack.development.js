@@ -5,34 +5,23 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = {
- 
   mode:"development",
-
   devtool: 'inline-cheap-source-map',
-
-  target:'web',
-  
+  target:'web', 
   devServer:{
-   
-    hot: "only",
-  
+    hot: true,
     port: 3000,
-   
     open: false,
-    
      compress:true,
-    
      historyApiFallback: true,
-   
      static: {
-      directory: resolveApp('./public')
+      directory: resolveApp('public')
     },
   },
 
   plugins: [
 
     new CleanWebpackPlugin(),
-
     new CopyWebpackPlugin({
       patterns: [
         { 
@@ -44,9 +33,8 @@ module.exports = {
         
       ],
     }),
-    new ReactRefreshWebpackPlugin()
-    
-  ]
-  
+   new ReactRefreshWebpackPlugin() 
+  ],
+ 
 };
 

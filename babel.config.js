@@ -1,3 +1,5 @@
+const isDevelopment = process.env.NODE_ENV !== 'production';
+//console.log(isDevelopment,'111');
 module.exports = {
   presets: [
     [
@@ -19,6 +21,7 @@ module.exports = {
     // '@emotion/babel-preset-css-prop',
   ],
    plugins: [
-     ['react-refresh/babel']
+    [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+    
    ],
 };
