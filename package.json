@@ -8,6 +8,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
+    "@types/fork-ts-checker-webpack-plugin": "^0.4.5",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "autoprefixer": "^10.4.4",
@@ -20,7 +21,9 @@
     "eslint-loader": "^4.0.2",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
+    "eslint-webpack-plugin": "^3.1.1",
     "file-loader": "^6.2.0",
+    "fork-ts-checker-webpack-plugin": "^7.2.6",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^5.5.0",
     "html-webpack-react-root-plugin": "^0.9.0",
@@ -36,6 +39,8 @@
     "react-refresh": "^0.12.0",
     "react-router-dom": "^6.3.0",
     "style-loader": "^3.3.1",
+    "stylelint": "^14.6.1",
+    "stylelint-config-standard": "^25.0.0",
     "ts-loader": "^9.2.8",
     "typescript": "^4.6.3",
     "url-loader": "^4.1.1",
@@ -50,7 +55,10 @@
     "serve": "webpack serve  --config ./config/webpack.comm.js --env development",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx ./src",
-    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx"
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx",
+    "lint:prettier": "prettier --check \"src/**/*\" --end-of-line auto",
+    "prettier": "prettier -c --write \"src/**/*\"",
+    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less"
   },
   "dependencies": {
     "core-js": "^3.21.1",

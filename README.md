@@ -476,8 +476,44 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
             //exclude表示要排除的、不编译的文件，他也可以指定一个列表
             "exclude": ["node_modules", "build", "dist"]
           }
+### 24.在 webpack 构建过程中添加类型检查
 
-### 24 添加 ESLint 代码规范校验
+安装：yarn add fork-ts-checker-webpack-plugin @types/fork-ts-checker-webpack-plugin --dev
+
+     说明：在webpack.development.js添加如下配置 
+      ...
+      const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+
+      const config = {
+        ...,
+        plugins: [
+          ...,
+          new ForkTsCheckerWebpackPlugin({
+            async: false
+          }),
+        ],
+      };
+       
+### 25.在 webpack 构建过程中添加代码规范校验
+
+安装：yarn add eslint-webpack-plugin --dev
+
+      说明：使用ESLintPlugin来使 Webpack 构建过程能够使用 ESLint 进行代码规范校验
+      在 webpack.development.js 修改如下内容
+        ...
+        const ESLintPlugin = require('eslint-webpack-plugin')
+
+        const config = {
+          ...,
+          plugins: [
+            ...,
+            new ESLintPlugin({
+              extensions: ["js", "jsx", "ts", "tsx"],
+            }),
+          ],
+        };
+
+### 26 添加 ESLint 代码规范校验
 
 安装：yarn add eslint eslint-plugin-react eslint-plugin-react-hooks @typescript-eslint/parser @typescript-eslint/eslint-plugin --dev
 
@@ -544,3 +580,84 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
          --> 解决路径问题，配制文件进入config文件夹中的路径问题！
 
 ### 26.添加 Prettier 代码自动格式化工具
+
+安装：yarn add prettier --dev
+说明：1.在项目根目录新建.prettierrc.js
+
+        module.exports={
+            "printWidth": 100, // 换行字符串阈值
+            "semi": true, // 句末加分号
+            "singleQuote": true, // 用单引号
+            "tabWidth": 2,
+            "trailingComma": "all", // 最后一个对象元素加逗号
+            "bracketSpacing": true, // 对象，数组加空格
+            "jsxBracketSameLine": false, // jsx > 是否另起一行
+            "arrowParens": "always", // (x) => {} 是否要有小括号
+            "requirePragma": false, // 是否要注释来决定是否格式化代码
+            "proseWrap": "preserve" // 是否要换行
+        }
+     2.为VSCode 安装 Prettier 插件
+     3.如果需要屏蔽不必要的文件，可以在项目根目录添加 .prettierignore文件, 并加入以下内容
+              *.svg
+              package.json
+              .DS_Store
+              .eslintignore
+              *.png
+              *.toml
+              .editorconfig
+              .gitignore
+              .prettierignore
+              LICENSE
+              .eslintcache
+              *.lock
+              yarn-error.log
+              /build
+              /public
+      4.添加 npm 脚本
+      "script":{
+          "lint:prettier": "prettier --check \"src/**/*\" --end-of-line auto",
+          "prettier": "prettier -c --write \"src/**/*\""
+      }
+      解释一下脚本的含义
+
+      lint:prettier:当想要检查文件是否已被格式化时，则可以使用--check标志（或-c）运行 Prettier。 这将输出一条语义化的消息和未格式化文件的列表。 上面脚本的意思是格式化src目录下的所有文件
+      prettier:重新格式化所有已被处理过的文件。 类似于eslint --fix的工作。上面脚本的意思是重新格式化src目录下的所有文件
+### 27.添加 EditorConfig 代码风格统一工具
+说明：EditorConfig 有助于维护跨多个编辑器和 IDE 从事同一项目的多个开发人员的一致编码风格，团队必备神器
+     在项目根目录创建.editorconfig并加入以下内容
+     # http://editorconfig.org
+        root = true
+
+        [*]
+        #缩进风格：空格
+        indent_style = space
+        #缩进大小2
+        indent_size = 2
+        #换行符lf
+        end_of_line = lf
+        #字符集utf-8
+        charset = utf-8
+        #是否删除行尾的空格
+        trim_trailing_whitespace = true
+        #是否在文件的最后插入一个空行
+        insert_final_newline = true
+
+        [*.md]
+        trim_trailing_whitespace = false
+
+        [Makefile]
+        indent_style = tab
+
+  ### 28.添加 stylelint
+
+  安装依赖:yarn add stylelint stylelint-config-standard --dev
+      说明：1.在根目录新建 .stylelintrc.js文件, 并加入以下内容
+           2.在package.json中配置 NPM 脚本
+           "script":{
+            "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+            }
+
+
+
+
+
