@@ -416,7 +416,118 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
 安装 yarn add typescript --dev
 安装 yarn add ts-loader --dev
 
-### 24.按照模式来分离配制文件
+    说明： TypeScript 会在编译代码时，进行严格的静态类型检查。
+          TypeScript 包括 ES6 和未来提案中的特性，比如异步操作和装饰器，也会从其他语言借鉴特性，比如接口和抽象类
+          TypeScript 编译成 JavaScript 后，可以在任何浏览器/操作系统上运行。无需任何运行时的额外开销
+          TypeScript 接口定义后,可以充分利用 VSCode 的自动补全/自动提示功能.因此可以直接代替文档，同时可以提高开发效率，降低维护成本
+          tsconfig.json 文件并替换为以下内容
+          {
+            "compilerOptions": {
+              // 生成代码的模块标准
+              "module": "esnext",
+              /*用于指定编译之后的目标版本 version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'.*/
+              "target": "esnext",
+              //用于指定要包含在编译中的库文件，如果你要使用一些ES6的新语法，你需要引入ES6这个库，或者也可以写ES2015
+              "lib": ["esnext", "dom"],
+
+              "baseUrl": ".",
+              //是否支持 JSX
+              "jsx": "react-jsx",
+              //是否可以导入 JSON 模块
+              "resolveJsonModule": true,
+              //允许从没有设置默认导出的模块中默认导入
+              "allowSyntheticDefaultImports": true,
+              //使用哪种模块解析策略
+              "moduleResolution": "node",
+              //禁止对同一个文件的不一致的引用.例如:引用文件时大小写必须一致
+              "forceConsistentCasingInFileNames": true,
+              //如果 strict=true,则 所有 strict 相关的配置都应该为 true
+              "noImplicitReturns": true,
+              //开启索引到对象时禁止报告有关隐式 anys 的错误
+              "suppressImplicitAnyIndexErrors": true,
+              //如果 strict=true,则 所有 strict 相关的配置都应该为 true
+              "noUnusedLocals": true,
+              //允许编译JS文件(js,jsx)
+              "allowJs": true,
+              //忽略所有的声明文件（ *.d.ts）的类型检查
+              "skipLibCheck": true,
+              //通过为导入内容创建命名空间，实现CommonJS和ES模块之间的互操作性. Implies 'allowSyntheticDefaultImports'.
+              "esModuleInterop": true,
+
+              //用于指定是否启动所有类型检查，如果设为true则会同时开启下面这几个严格类型检查()
+              //开启所有严格的类型检查.如果 strict=true,则 所有 strict 相关的配置都应该为 true
+              "strict": true,
+              //路径映射，相对于 baseUrL
+              "paths": {
+                "@/*": ["./src/*"]
+              },
+              //不生成编译后的文件
+              "noEmit": true
+            },
+            //nclude也可以指定要编译的路径列表，但是和files的区别在于，这里的路径可以是文件夹，也可以是文件，可以使用相对和绝对路径
+            "include": [
+              "src/**/*",
+              "typings/**/*",
+              "config/**/*",
+              ".eslintrc.js",
+              ".stylelintrc.js",
+              ".prettierrc.js"
+            ],
+            //exclude表示要排除的、不编译的文件，他也可以指定一个列表
+            "exclude": ["node_modules", "build", "dist"]
+          }
+
+### 24 添加 ESLint 代码规范校验
+
+安装：yarn add eslint eslint-plugin-react eslint-plugin-react-hooks @typescript-eslint/parser @typescript-eslint/eslint-plugin --dev
+
+      说明：1.ESLint 可以帮助我们找出有问题的编码模式或不符合规则的代码,
+            eslint: ESLint 核心库
+            eslint-plugin-react: React 代码规范的校验规则
+            react/jsx-key:用来检查是否声明了 key 属性
+            no-array-index-key:用来检查是否使用了数组索引声明 key 属性
+            ....其他 React 相关规范
+            eslint-plugin-react-hooks:React hooks 代码规范的校验规则
+            rules-of-hooks: 用来检查 Hook 的规则(不能 if/循环中使用 Hooks)
+            exhaustive-deps 规则，此规则会在useEffct添加错误依赖时发出警告并给出修复建议
+            @typescript-eslint/parser:将 TypeScript 代码纳入 ESLint 校验范围
+            @typescript-eslint/eslint-plugin:TypeScript 代码规范的校验规则
+          2.在根目录创建.eslintrc.json文件并加入以下内容
+          {
+            "parser": "@typescript-eslint/parser",
+            "parserOptions": {
+              "ecmaVersion": 2018,
+              "sourceType": "module"
+            },
+            "plugins": ["@typescript-eslint", "react-hooks"],
+            "extends": [
+              "plugin:react/recommended",
+              "plugin:@typescript-eslint/recommended"
+            ],
+            "rules": {
+              "react-hooks/rules-of-hooks": "error",
+              "react-hooks/exhaustive-deps": "warn",
+              "react/prop-types": "off",
+              "@typescript-eslint/explicit-module-boundary-types": "off"
+            }
+          }
+
+          3.添加 NPM 脚本
+          {
+            "script": {
+              "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
+              "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx ./src",
+              "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx"
+            }
+          }
+          4.如果需要屏蔽不需要检测的文件或目录，可以在项目根目录添加 .eslintignore 文件。并加入类似的如下内容
+            .DS_Store
+            node_modules
+            dist
+            build
+            public
+
+### 25.按照模式来分离配制文件
 
     说明：1.建立config文件夹，创建下面文件
         --> webpack.comm.js
@@ -431,3 +542,5 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
          安装 yarn add -D webpack-merge
          --> 根据获得的env的值进行判断后合并
          --> 解决路径问题，配制文件进入config文件夹中的路径问题！
+
+### 26.添加 Prettier 代码自动格式化工具

@@ -1,12 +1,55 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "es6",
-    "target": "es5",
-    "jsx": "react",
+    // 生成代码的模块标准
+    "module": "esnext",
+    /*用于指定编译之后的目标版本 version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'.*/
+    "target": "esnext",
+    //用于指定要包含在编译中的库文件，如果你要使用一些ES6的新语法，你需要引入ES6这个库，或者也可以写ES2015
+    "lib": ["esnext", "dom"],
+
+    "baseUrl": ".",
+    //是否支持 JSX
+    "jsx": "react-jsx",
+    //是否可以导入 JSON 模块
+    "resolveJsonModule": true,
+    //允许从没有设置默认导出的模块中默认导入
+    "allowSyntheticDefaultImports": true,
+    //使用哪种模块解析策略
+    "moduleResolution": "node",
+    //禁止对同一个文件的不一致的引用.例如:引用文件时大小写必须一致
+    "forceConsistentCasingInFileNames": true,
+    //如果 strict=true,则 所有 strict 相关的配置都应该为 true
+    "noImplicitReturns": true,
+    //开启索引到对象时禁止报告有关隐式 anys 的错误
+    "suppressImplicitAnyIndexErrors": true,
+    //如果 strict=true,则 所有 strict 相关的配置都应该为 true
+    "noUnusedLocals": true,
+    //允许编译JS文件(js,jsx)
     "allowJs": true,
-    "moduleResolution": "node"
-  }
+    //忽略所有的声明文件（ *.d.ts）的类型检查
+    "skipLibCheck": true,
+    //通过为导入内容创建命名空间，实现CommonJS和ES模块之间的互操作性. Implies 'allowSyntheticDefaultImports'.
+    "esModuleInterop": true,
+
+    //用于指定是否启动所有类型检查，如果设为true则会同时开启下面这几个严格类型检查()
+    //开启所有严格的类型检查.如果 strict=true,则 所有 strict 相关的配置都应该为 true
+    "strict": true,
+    //路径映射，相对于 baseUrL
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    //不生成编译后的文件
+    "noEmit": true
+  },
+  //nclude也可以指定要编译的路径列表，但是和files的区别在于，这里的路径可以是文件夹，也可以是文件，可以使用相对和绝对路径
+  "include": [
+    "src/**/*",
+    "typings/**/*",
+    "config/**/*",
+    ".eslintrc.js",
+    ".stylelintrc.js",
+    ".prettierrc.js"
+  ],
+  //exclude表示要排除的、不编译的文件，他也可以指定一个列表
+  "exclude": ["node_modules", "build", "dist"]
 }
