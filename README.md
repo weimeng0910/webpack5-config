@@ -6,7 +6,9 @@
 
 - 使用 Webpack5.0 构建项目（不使用 create-react-app、umi 等脚手架）；
 - 使用 Babel8 配置转换 ES6、React、Mobx 等语法；
-- React 版本 V17.0.1，全部采用函数化 Hooks 特性开发项目组件；
+- 使用 TypeScript 进行严格类型检查；
+- 使用 ESLint 代码规范校验，Prettier stylelint 代码自动格式化工具，EditorConfig 代码风格统一工具
+- React 版本 V18.0.0，全部采用函数化 Hooks 特性开发项目组件；
 - 采用 React-router5 工具 配置项目路由；
 - 采用 Mobx5 + Hooks 实现项目数据状态管理；
 - 封装 Axios 库实现与后台 http 请求交互；
@@ -37,7 +39,13 @@
 ├── .babel.config.js        // babel配置,依赖什么样的插件
 ├── .browserslistrc         // 浏览器过滤规则配置,babel依赖这个文件，同样css也依赖
 ├── .editorconfig           // 项目格式配置
-├── .eslintrc.js            // ESLint配置
+├── .eslintrc.json          // ESLint配置
+├── .eslintignore           // ESLint配置屏蔽不需要检测的文件或目录
+├── .prettierrc.js          // Prettier 代码自动格式化配置
+├── .prettierignore         // Prettier 代码自动格式化配置屏蔽不必要的文件
+├── .editorconfig           // EditorConfig 代码风格统一配置
+├── .editorconfig           // EditorConfig 代码风格统一配置
+├── .stylelintrc.js         // stylelint是CSS 规范校验工具配置
 ├── .gitignore              // git 忽略配置
 ├── .postcssrc.js           // postcss配置,依赖什么样的插件
 ├── package.json            // 依赖包配置
