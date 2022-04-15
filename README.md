@@ -1,4 +1,4 @@
-#🌈 🚀 基于 webpack5.0 从零搭建的 React cookbooks。🚀
+#🌈 🚀 基于 webpack5.0 超详细React项目搭建 React cookbooks。🚀
 
 # 技术栈
 
@@ -21,6 +21,7 @@
 │   ├── webpack.common.js   // webpack通用配置
 │   ├── webpack.dev.js      // webpack开发环境配置
 │   └── webpack.prod.js     // webpack生产环境配置
+│   └── paths.js            // webpack路径配置
 ├── dist                    // 打包输出目录
 ├── public                  // 项目公开目录
 ├── src                     // src开发目录
@@ -48,6 +49,7 @@
 ├── .stylelintrc.js         // stylelint是CSS 规范校验工具配置
 ├── .gitignore              // git 忽略配置
 ├── .postcssrc.js           // postcss配置,依赖什么样的插件
+├── tsconfig.json           // typescript配置
 ├── package.json            // 依赖包配置
 └── README.md               // 项目说明
 ```
@@ -571,7 +573,7 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
             build
             public
 
-### 25.按照模式来分离配制文件
+### 27.按照模式来分离配制文件
 
     说明：1.建立config文件夹，创建下面文件
         --> webpack.comm.js
@@ -587,7 +589,7 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
          --> 根据获得的env的值进行判断后合并
          --> 解决路径问题，配制文件进入config文件夹中的路径问题！
 
-### 26.添加 Prettier 代码自动格式化工具
+### 28.添加 Prettier 代码自动格式化工具
 
 安装：yarn add prettier --dev
 说明：1.在项目根目录新建.prettierrc.js
@@ -630,7 +632,7 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
 
       lint:prettier:当想要检查文件是否已被格式化时，则可以使用--check标志（或-c）运行 Prettier。 这将输出一条语义化的消息和未格式化文件的列表。 上面脚本的意思是格式化src目录下的所有文件
       prettier:重新格式化所有已被处理过的文件。 类似于eslint --fix的工作。上面脚本的意思是重新格式化src目录下的所有文件
-### 27.添加 EditorConfig 代码风格统一工具
+### 29.添加 EditorConfig 代码风格统一工具
 说明：EditorConfig 有助于维护跨多个编辑器和 IDE 从事同一项目的多个开发人员的一致编码风格，团队必备神器
      在项目根目录创建.editorconfig并加入以下内容
      # http://editorconfig.org
@@ -656,15 +658,54 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
         [Makefile]
         indent_style = tab
 
-  ### 28.添加 stylelint
+  ### 30.添加 stylelint
 
   安装依赖:yarn add stylelint stylelint-config-standard --dev
       说明：1.在根目录新建 .stylelintrc.js文件, 并加入以下内容
+            module.exports = {
+                extends: "stylelint-config-standard",
+                rules: {
+                  // your rules
+                  
+                },
+                // 忽略其他文件，只校验样式相关的文件
+                ignoreFiles: [
+                  "node_modules/**/*",
+                  "public/**/*",
+                  "dist/**/*",
+                  "**/*.js",
+                  "**/*.jsx",
+                  "**/*.tsx",
+                  "**/*.ts",
+                ],
+              };
            2.在package.json中配置 NPM 脚本
            "script":{
             "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
             }
 
+### 31.添加 Git Hook
+安装：yarn add husky lint-staged --dev
+       说明：1.通过 lint-staged 实现这道门槛:在 git commit 命令运行时先校验 lint（eslint, stylelint 等）是否通过，未通过则不予提交
+
+       2.在package.json中配置 NPM 脚本
+       {
+        "scripts": {
+          "precommit": "lint-staged",
+          "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx"
+        },
+        "husky": {
+          "hooks": {
+            "pre-commit": "lint-staged"
+          }
+        },
+        "lint-staged": {
+          "**/*.less": "stylelint --syntax less",
+          "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
+          "**/*.{js,jsx,tsx,ts,less,md,json}": ["prettier --write"]
+        }
+      }
+      3.在每次 git commit 之前会进入工作区文件扫描，自动修复 eslint/stylelint 问题再使用 prettier 自动格式化，最后再提交到工作区。
 
 
 
