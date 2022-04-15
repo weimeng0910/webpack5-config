@@ -1,4 +1,4 @@
-#🌈 🚀 基于 webpack5.0 超详细React项目搭建 React cookbooks。🚀
+#🌈 🚀 基于 webpack5.0 超详细React项目搭建 cookbooks。🚀
 
 # 技术栈
 
@@ -632,8 +632,11 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
 
       lint:prettier:当想要检查文件是否已被格式化时，则可以使用--check标志（或-c）运行 Prettier。 这将输出一条语义化的消息和未格式化文件的列表。 上面脚本的意思是格式化src目录下的所有文件
       prettier:重新格式化所有已被处理过的文件。 类似于eslint --fix的工作。上面脚本的意思是重新格式化src目录下的所有文件
+
 ### 29.添加 EditorConfig 代码风格统一工具
+
 说明：EditorConfig 有助于维护跨多个编辑器和 IDE 从事同一项目的多个开发人员的一致编码风格，团队必备神器
+
      在项目根目录创建.editorconfig并加入以下内容
      # http://editorconfig.org
         root = true
@@ -658,7 +661,7 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
         [Makefile]
         indent_style = tab
 
-  ### 30.添加 stylelint
+### 30.添加 stylelint
 
   安装依赖:yarn add stylelint stylelint-config-standard --dev
       说明：1.在根目录新建 .stylelintrc.js文件, 并加入以下内容
@@ -685,7 +688,9 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
             }
 
 ### 31.添加 Git Hook
+
 安装：yarn add husky lint-staged --dev
+
        说明：1.通过 lint-staged 实现这道门槛:在 git commit 命令运行时先校验 lint（eslint, stylelint 等）是否通过，未通过则不予提交
 
        2.在package.json中配置 NPM 脚本
