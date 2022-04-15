@@ -1,14 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
-import App from './App.jsx'
-import './css/index.less';
-import './js/Font';
-
-
-
-if (module.hot) {
-  module.hot.accept(['./js/Font.js',] )
-}
+//导入全局样式
+import './assets/styles/reset.css';
+import App from './App';
 
 ReactDOM.createRoot(document.getElementById('app')).render(<App />)

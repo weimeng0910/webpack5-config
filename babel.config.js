@@ -13,7 +13,7 @@ module.exports = {
         // 指定core-js版本，默认是 2 会报错
         corejs: 3
       }
-        
+
     ],
     ['@babel/preset-react'],
 
@@ -22,6 +22,6 @@ module.exports = {
   ],
    plugins: [
     [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
-    
+
    ],
 };

@@ -1,4 +1,6 @@
-#🌈 🚀 基于 webpack5.0 超详细React项目搭建 cookbooks。🚀
+#🌈 🚀 基于 webpack5.71.0 超详细React项目搭建 cookbooks。🚀
+# 前言
+从零配置基于 webpack5.71.0 搭建React应用模板，方便快速的进行开发，React全家桶使用（React + React-router + Axios + Mobx + Ant Design Mobile 5.0）、ESLint等项目开发规范等。
 
 # 技术栈
 
@@ -12,7 +14,7 @@
 - 采用 React-router5 工具 配置项目路由；
 - 采用 Mobx5 + Hooks 实现项目数据状态管理；
 - 封装 Axios 库实现与后台 http 请求交互；
-- UI 库采用流行的 Ant-design4.0 组件库；
+- UI 库采用流行的 Ant Design Mobile 5.0 组件库；
 
 ## 目录结构
 
@@ -53,6 +55,7 @@
 ├── package.json            // 依赖包配置
 └── README.md               // 项目说明
 ```
+# 第一部分，webpack5的开发环境搭建
 
 ### 1.初始化 package.json
 
@@ -710,7 +713,31 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
           "**/*.{js,jsx,tsx,ts,less,md,json}": ["prettier --write"]
         }
       }
-      3.在每次 git commit 之前会进入工作区文件扫描，自动修复 eslint/stylelint 问题再使用 prettier 自动格式化，最后再提交到工作区。
+      3.在每次 git commit 之前会进入工作区文件扫描，自动修复 eslint/stylelint 
+      问题再使用 prettier 自动格式化，最后再提交到工作区。
+
+### 32.Commit Message 规范
+
+    大量的代码提交，必然会产生大量的 Commit log. 每一条都 Commit log 记录着某一阶段所完成的事以及关注点，应该尽可能详细具体；在工作中一份清晰规范的 Commit Message 能让后续代码审查、信息查找、版本回退都更加高效可靠。
+      Commit message 格式
+      <type>: <subject> 注意冒号后面有空格。
+      type
+      用于说明 commit 的类别，只允许使用下面 7 个标识。
+
+      feat：新功能（feature）
+      fix：修补 bug
+      docs：文档（documentation）
+      style： 格式（不影响代码运行的变动）
+      refactor：重构（即不是新增功能，也不是修改 bug 的代码变动）
+      test：增加测试
+      chore：构建过程或辅助工具的变动
+
+      如果 type 为 feat 和 fix，则该 commit 将肯定出现在 Change log 之中。
+
+# 第二部分，React项目开发
+
+### 1.Ant Design Mobile 5.0 移动端UI库
+ 安装：yarn add antd-mobile-with-react18
 
 
 

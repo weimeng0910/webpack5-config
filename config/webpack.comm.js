@@ -12,45 +12,45 @@ const devConfig = require('./webpack.development')
 const commonConfig = {
 
   entry:'./src/index.js',
- 
+
   resolve: {
-    
-    extensions: ['.jsx', '.ts', '.tsx', '.js'],
-    
+
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+
     alias: {
       '@': resolveApp('./src'),
     },
   },
-  
+
   output: {
-    
+
     filename: 'js/main.js',
-    
+
     path: resolveApp('./dist'),
 
   },
 
   module: {
 
-   
+
     rules: [
-      
+
 
       {
-       
+
         test: /\.css$/,
-       
+
         use: [
           {
             loader:'style-loader',
-         
+
           },
           {
             loader:'css-loader',
             options: {
-            
+
               importLoaders : 1,
-       
+
               esModule:false
 
             }
@@ -58,24 +58,24 @@ const commonConfig = {
           {
             loader:'postcss-loader'
           }
-            
-        ] 
+
+        ]
       },
-    
+
       {
         test: /\.less$/,
-        
+
         use: [
           'style-loader',
           'css-loader',
           'postcss-loader',
-         
+
           'less-loader',
         ]
       },
-    
+
       {
-        
+
         test: /\.(svg|png|gif|jpe?g)$/,
         type:'asset',
         generator:{
@@ -87,7 +87,7 @@ const commonConfig = {
           }
         }
       },
-    
+
       {
         test:/\.(ttf|woff|eot|svg)$/,
         type:'asset/resource',
@@ -95,23 +95,23 @@ const commonConfig = {
           filename:"fonts/[name].[hash:6][ext]"
         }
       },
-     
+
       {
         test: /\.(js|jsx?)$/,
         exclude: /node_modules/,
-        use:['babel-loader'] 
+        use:['babel-loader']
       },
-     
+
     {
       test:/\.(ts|tsx?)$/,
       exclude: /node_modules/,
-      use:['ts-loader'] 
+      use:['ts-loader']
 
     }
     ]
   },
-  
- 
+
+
   plugins: [
 
     new HtmlWebpackPlugin({
@@ -122,11 +122,12 @@ const commonConfig = {
 
     new friendlyErrorsWebpackPlugin()
 
+
   ]
-  
+
 }
 
-module.exports = (env) => { 
+module.exports = (env) => {
 
   const isProduction = env.isProduction
   //合并配置信息
