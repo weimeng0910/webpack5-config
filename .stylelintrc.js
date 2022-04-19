@@ -1,9 +1,13 @@
 module.exports = {
   extends: "stylelint-config-standard",
+  "plugins": [
+    "stylelint-order"
+  ],
   rules: {
     // your rules
     // 颜色指定大写
     "color-hex-case": "upper",
+    // "color-no-invalid-hex": true,
     // 禁止空块
     'block-no-empty': true,
     // 颜色6位长度

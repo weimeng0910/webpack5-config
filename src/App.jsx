@@ -1,10 +1,13 @@
 import React from "react";
-import Home from './home/Home';
-
+import './App.css';
+import IndexRouter from "./routers/IndexRouter";
  function App() {
 
   return (
-    <Home/>
+    <div>
+      <IndexRouter></IndexRouter>
+    </div>
+
   );
 }
 export default App;

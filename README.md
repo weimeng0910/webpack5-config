@@ -1,6 +1,8 @@
-#🌈 🚀 基于 webpack5.71.0 超详细React项目搭建 cookbooks。🚀
+#🌈 🚀 基于 webpack5.71.0 超详细 React 项目搭建 cookbooks。🚀
+
 # 前言
-从零配置基于 webpack5.71.0 搭建React应用模板，方便快速的进行开发，React全家桶使用（React + React-router + Axios + Mobx + Ant Design Mobile 5.0）、ESLint等项目开发规范等。
+
+从零配置基于 webpack5.71.0 搭建 React 应用模板，方便快速的进行开发，React 全家桶使用（React + React-router + Axios + Mobx + Ant Design Mobile 5.0）、ESLint 等项目开发规范等。
 
 # 技术栈
 
@@ -33,6 +35,7 @@
 │   ├── modules             // 公共业务模块
 │   ├── pages               // 具体业务页面
 │   ├── routers             // 项目路由配置
+│   ├── views               // 项目路由组件
 │   ├── services            // axios服务等相关
 │   ├── stores              // 全局公共 mobx store
 │   ├── styles              // 存放公共样式
@@ -55,7 +58,8 @@
 ├── package.json            // 依赖包配置
 └── README.md               // 项目说明
 ```
-# 第一部分，webpack5的开发环境搭建
+
+# 第一部分，webpack5 的开发环境搭建
 
 ### 1.初始化 package.json
 
@@ -489,11 +493,12 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
             //exclude表示要排除的、不编译的文件，他也可以指定一个列表
             "exclude": ["node_modules", "build", "dist"]
           }
+
 ### 24.在 webpack 构建过程中添加类型检查
 
 安装：yarn add fork-ts-checker-webpack-plugin @types/fork-ts-checker-webpack-plugin --dev
 
-     说明：在webpack.development.js添加如下配置 
+     说明：在webpack.development.js添加如下配置
       ...
       const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
@@ -506,7 +511,7 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
           }),
         ],
       };
-       
+
 ### 25.在 webpack 构建过程中添加代码规范校验
 
 安装：yarn add eslint-webpack-plugin --dev
@@ -666,13 +671,13 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
 
 ### 30.添加 stylelint
 
-  安装依赖:yarn add stylelint stylelint-config-standard --dev
-      说明：1.在根目录新建 .stylelintrc.js文件, 并加入以下内容
-            module.exports = {
-                extends: "stylelint-config-standard",
-                rules: {
-                  // your rules
-                  
+安装依赖:yarn add stylelint stylelint-config-standard --dev
+说明：1.在根目录新建 .stylelintrc.js 文件, 并加入以下内容
+module.exports = {
+extends: "stylelint-config-standard",
+rules: {
+// your rules
+
                 },
                 // 忽略其他文件，只校验样式相关的文件
                 ignoreFiles: [
@@ -713,7 +718,7 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
           "**/*.{js,jsx,tsx,ts,less,md,json}": ["prettier --write"]
         }
       }
-      3.在每次 git commit 之前会进入工作区文件扫描，自动修复 eslint/stylelint 
+      3.在每次 git commit 之前会进入工作区文件扫描，自动修复 eslint/stylelint
       问题再使用 prettier 自动格式化，最后再提交到工作区。
 
 ### 32.Commit Message 规范
@@ -734,11 +739,17 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
 
       如果 type 为 feat 和 fix，则该 commit 将肯定出现在 Change log 之中。
 
-# 第二部分，React项目开发
+### 33.加载 Sass/SCSS 文件并将他们编译为 CSS
 
-### 1.Ant Design Mobile 5.0 移动端UI库
- 安装：yarn add antd-mobile-with-react18
+安装: yarn add sass-loader sass webpack --save-dev
 
+# 第二部分，React 项目开发
 
+### 1.安装路由 react-router-dom
 
+安装：yarn add --seve -dev react-router-dom
+
+### 2.Ant Design 的引入
+
+安装：yarn add antd --save @ant-design/icons
 
