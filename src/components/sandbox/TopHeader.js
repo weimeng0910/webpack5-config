@@ -1,12 +1,14 @@
 import React,{useState} from 'react'
 
-import { Layout } from 'antd';
+import { Layout,Dropdown, Menu,Avatar } from 'antd';
 
 import {
 
   MenuUnfoldOutlined,
 
-  MenuFoldOutlined
+  MenuFoldOutlined,
+
+  UserOutlined
 
 } from '@ant-design/icons';
 
@@ -14,23 +16,46 @@ const { Header } = Layout;
 
 export default function TopHeader() {
 
-  const [collapsed] = useState(false);
+  const [collapsed,setCollapsed] = useState(false);
 
+//改变图标的函数
+  const changeCollapsed=() => {
+
+      setCollapsed(!collapsed)
+  };
+//定义下拉菜单的变量
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          超级管理员
+        </Menu.Item>
+        <Menu.Item danger>
+
+        退出
+
+        </Menu.Item>
+      </Menu>
+    );
   return (
 
-    <Header className="site-layout-background" style={{ padding: 0 }}>
-            {collapsed
+    <Header className="site-layout-background" style={{ padding:'16px  16px' }}>
+            {
+            collapsed
               ?
-              <MenuUnfoldOutlined />
+              <MenuUnfoldOutlined onClick = { changeCollapsed }/>
               :
-              <MenuFoldOutlined/>
-
-              // {
-              //   className: 'trigger',
-              //   onClick: this.toggle,
-              // }
+              <MenuFoldOutlined onClick = { changeCollapsed } />
 
             }
+            <div style ={{float:'right'}}>
+
+              <span style= {{margin:"0px 20px 30px 0px " }}>欢迎admin回来</span>
+
+              <Dropdown overlay={menu}>
+                  <Avatar size={35} icon={ < UserOutlined /> } style= {{margin:"0px 20px 20px 0" }}/>
+              </Dropdown>
+
+            </div>
     </Header>
   )
 }

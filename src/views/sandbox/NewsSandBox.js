@@ -28,11 +28,16 @@ import NotFound from '../sandbox/notfound/NotFound';
 const { Content } = Layout;
 
 export default function NewsSandBox() {
+
   return (
+
     <Layout>
+        {/* 左侧菜单导航 */}
         <Sidemenu></Sidemenu>
         <Layout className="site-layout">
+            {/* 顶部展示布局 */}
             <TopHeader></TopHeader>
+            {/* 内容页面布局 */}
             <Content
             className="site-layout-background"
             style={{

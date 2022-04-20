@@ -19,3 +19,9 @@
 .site-layout .site-layout-background {
   background: #FFFFFF;
 }
+
+/* 让界面全屏 */
+#root,
+.ant-layout {
+  height: 100%;
+}

@@ -4,9 +4,9 @@ import IndexRouter from "./routers/IndexRouter";
  function App() {
 
   return (
-    <div>
+    <>
       <IndexRouter></IndexRouter>
-    </div>
+    </>
 
   );
 }

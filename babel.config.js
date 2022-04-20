@@ -20,6 +20,25 @@ module.exports = {
     // '@babel/preset-typescript',
     // '@emotion/babel-preset-css-prop',
   ],
+  "plugins": [
+    "@babel/transform-runtime",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": "css" // `style: true` 会加载 less 文件
+      }
+    ]
+  ],
+
    plugins: [
     [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
 

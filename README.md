@@ -252,14 +252,20 @@ DefinePlugin 在编译时将代码中的变量替换为其他值或表达式
 ### 13.配置 Babel 实现 JS 的兼容操做
 
 安装：yarn add -D babel-loader @babel/core @babel/preset-env
+yarn add -D @babel/plugin-transform-runtime babel-plugin-import
+@babel/plugin-proposal-class-properties @babel/plugin-proposal-decorators
 
      功能：Babel 是一个 JavaScript 编译器，识别 JSX ES6+ TS 转换 ES5 代码，让你使用最新的语言特性而不用担心兼容性问题，并且可以通过插件机制根据需求灵活的扩展
      1.babel-loader - 使用Babel和webpack转译文件
      2.@babel/core - 转译ES2015+的代码
      3.@babel/preset-env 插件的集合
-     4.在 Babel 执行编译的过程中，会从项目根目录下的配置文件读取配置。在根目录下创建Babel的配置文件babel.config.js(json cjs mjs)多包管理，简化webpack.config中的配制
-     5.还可以建立babelrc.json(以前的方式)
-     6.在根目录下建立文件.gitignore排除babel对node_modules文件和dist目录进行再检查
+     4.@babel/preset-react转换React jsx语法;
+     5.@babel/plugin-proposal-class-properties 转换 Class语法;
+     6.@babel/plugin-proposal-decorators 转换 Mobx 等更高级的语法；
+     7.babel-plugin-import 配合实现React组件的按需加载；
+     8.在 Babel 执行编译的过程中，会从项目根目录下的配置文件读取配置。在根目录下创建Babel的配置文件babel.config.js(json cjs mjs)多包管理，简化webpack.config中的配制
+     9.还可以建立babelrc.json(以前的方式)
+     10.在根目录下建立文件.gitignore排除babel对node_modules文件和dist目录进行再检查
 
 ### 14.polyfill 配制的操做实再 JS 兼容的补充(生产依赖)
 
@@ -752,4 +758,3 @@ rules: {
 ### 2.Ant Design 的引入
 
 安装：yarn add antd --save @ant-design/icons
-
