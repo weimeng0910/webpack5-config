@@ -27,7 +27,7 @@ import NotFound from '../sandbox/notfound/NotFound';
 
 const { Content } = Layout;
 
-export default function NewsSandBox() {
+const NewsSandBox=()=> {
 
   return (
 
@@ -47,8 +47,8 @@ export default function NewsSandBox() {
             }}
           >
                 <Routes>
-
-                  <Route path = "home" element = { <Home/> }/>
+                  {/* 添加index属性，可以达到二级页面重定向回首页功能 */}
+                  <Route path = 'home' element = { <Home/> }/>
                   <Route path = "user-manage/list" element = { <UserList/> }/>
                   <Route path = "right-manage/right/list" element = { <RightList/> }/>
                   <Route path = "right-manage/role/list" element = { <RoleList/> }/>
@@ -66,3 +66,4 @@ export default function NewsSandBox() {
     </Layout>
   )
 }
+export default NewsSandBox ;

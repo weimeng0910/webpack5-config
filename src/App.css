@@ -1,1 +1,7 @@
 @import "~antd/dist/antd.css";
+
+/* 修改各种浏览器滚动条样式 */
+/* stylelint-disable-next-line declaration-block-single-line-max-declarations */
+::-webkit-scrollbar { position: absolute; width: 5px; height: 5px; }
+::-webkit-scrollbar-thumb { background-color: #1890FF; }
+::-webkit-scrollbar-track { background-color: #DDDDDD; }

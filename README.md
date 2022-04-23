@@ -758,3 +758,10 @@ rules: {
 ### 2.Ant Design 的引入
 
 安装：yarn add antd --save @ant-design/icons
+
+### 3.axios json-server 安装
+
+json-server 是基于 node 封装的模拟服务器接口的工具，不存在跨域,
+Access-Control-Allow-Origin 会以“\*”作为通配符，从而允许所有域都具有访问资源的权限。
+安装：yarn add axios
+npm install -g json-server
