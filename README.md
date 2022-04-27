@@ -436,8 +436,8 @@ yarn add -D @babel/plugin-transform-runtime babel-plugin-import
 
 ### 23.ts-loader 编译 TS
 
-安装 yarn add typescript --dev
-安装 yarn add ts-loader --dev
+安装 yarn add typescript --dev --save
+安装 yarn add ts-loader --dev --save
 
     说明： TypeScript 会在编译代码时，进行严格的静态类型检查。
           TypeScript 包括 ES6 和未来提案中的特性，比如异步操作和装饰器，也会从其他语言借鉴特性，比如接口和抽象类
