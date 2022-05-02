@@ -13,6 +13,8 @@
     "esModuleInterop": true, // 禁用命名空间引用 (import * as fs from "fs") 启用 CJS/AMD/UMD 风格引用 (import fs from "fs")
     "allowSyntheticDefaultImports": true, // 允许从没有默认导出的模块进行默认导入
     "strict": true, // 启用所有严格类型检查选项
+    "noImplicitAny": true,
+    // "strictNullChecks":true,//严格的空检查 -strictNullChecks
     "forceConsistentCasingInFileNames": true, // 不允许对同一个文件使用不一致格式的引用
     "moduleResolution": "node", // 使用 Node.js 风格解析模块
     "resolveJsonModule": true, // 允许使用 .json 扩展名导入的模块
@@ -27,7 +29,7 @@
     "noFallthroughCasesInSwitch": true,
 
   },
-  //nclude也可以指定要编译的路径列表，但是和files的区别在于，这里的路径可以是文件夹，也可以是文件，可以使用相对和绝对路径
+  //include也可以指定要编译的路径列表，但是和files的区别在于，这里的路径可以是文件夹，也可以是文件，可以使用相对和绝对路径
   "include": [
     "src/**/*",
     "typings/**/*",
