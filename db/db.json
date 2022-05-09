@@ -71,6 +71,15 @@
       "region": "亚洲",
       "roleId": 3,
       "id": 8
+    },
+    {
+      "username": "text",
+      "password": "12345",
+      "region": "全球",
+      "roleId": 1,
+      "roleState": true,
+      "default": false,
+      "id": 9
     }
   ],
   "roles": [
