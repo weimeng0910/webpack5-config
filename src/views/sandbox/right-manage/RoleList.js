@@ -84,7 +84,7 @@ const Rolelist = () => {
     };
     //获取角色列表的数据
     useEffect(() => {
-        axios.get('http://localhost:5000/roles').then((res) => {
+        axios.get('http://localhost:5000/role').then((res) => {
             setDataSource(res.data);
         });
     }, []);
@@ -116,7 +116,7 @@ const Rolelist = () => {
         );
 
         //更新数据库中数据patch
-        axios.patch(`http://localhost:5000/roles/${currentId}`, {
+        axios.patch(`http://localhost:5000/role/${currentId}`, {
             rights: currentRights,
         });
     };
@@ -125,7 +125,7 @@ const Rolelist = () => {
     const handleCancel = () => {
         setisModalVisible(false);
     };
-  
+
     //Tree中点击选中与否的处理函数
     const onCheck = (checkedKeys) => {
         //console.log(checkedKeys);

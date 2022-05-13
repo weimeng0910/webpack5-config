@@ -42,14 +42,15 @@ export default function UserList() {
             3: 'editor',
         };
         axios.get('http://localhost:5000/users?_expand=role').then((res) => {
-            console.log('111', res.data);
+            //对数据根据用户进行判定
             const list = res.data;
             setDataSource(
                 roleObj[roleId] === 'superadmin'
                     ? list
                     : [
-                          ...list.filter((item) => item.username === username),
+                          ...list.filter((item) => item.username === username), //过滤出对应的用户
                           ...list.filter(
+                              //过滤出和localStorage中对应用户下面的区域用户的数据
                               (item) =>
                                   item.region === region &&
                                   roleObj[item.roleId] === 'editor'
@@ -208,7 +209,6 @@ export default function UserList() {
     };
     //确定提交
     const addFormOK = () => {
-        //console.log(userListRef.current);
         //点击确定后，访问子组件开放给父组件的方法，从而获得form表单的value
         //在父组件中, 调用Ref.current时, 实际上是useImperativeHandle第二个参数返回的对象
         userListRef.current
@@ -218,7 +218,7 @@ export default function UserList() {
                 //关闭模态框
                 setIsAddVisible(false);
                 //重置表单
-
+                console.log('222', userListRef.current);
                 userListRef.current.resetFields();
 
                 //post到后端，生成id，再设置 datasource, 方便后面的删除和更新

@@ -11,11 +11,11 @@
     },
     {
       "username": "铁锤",
-      "password": "123",
+      "password": "123456",
       "roleState": true,
       "default": false,
       "region": "亚洲",
-      "roleId": 2,
+      "roleId": 3,
       "id": 2
     },
     {
@@ -32,8 +32,8 @@
       "password": "123",
       "roleState": true,
       "default": false,
-      "region": "",
-      "roleId": 1,
+      "region": "北美洲",
+      "roleId": 2,
       "id": 4
     },
     {
@@ -73,10 +73,10 @@
       "id": 8
     },
     {
-      "username": "text",
-      "password": "12345",
-      "region": "全球",
-      "roleId": 1,
+      "username": "诸葛山珍",
+      "password": "123",
+      "region": "北美洲",
+      "roleId": 2,
       "roleState": true,
       "default": false,
       "id": 9

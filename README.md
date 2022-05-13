@@ -8,15 +8,15 @@
 
 涉及的技术栈均采用当前最新的版本和语法：
 
-- 使用 Webpack5.0 构建项目（不使用 create-react-app、umi 等脚手架）；
-- 使用 Babel8 配置转换 ES6、React、Mobx 等语法；
-- 使用 TypeScript 进行严格类型检查；
-- 使用 ESLint 代码规范校验，Prettier stylelint 代码自动格式化工具，EditorConfig 代码风格统一工具
-- React 版本 V18.0.0，全部采用函数化 Hooks 特性开发项目组件；
-- 采用 React-router5 工具 配置项目路由；
-- 采用 Mobx5 + Hooks 实现项目数据状态管理；
-- 封装 Axios 库实现与后台 http 请求交互；
-- UI 库采用流行的 Ant Design Mobile 5.0 组件库；
+-   使用 Webpack5.0 构建项目（不使用 create-react-app、umi 等脚手架）；
+-   使用 Babel8 配置转换 ES6、React、Mobx 等语法；
+-   使用 TypeScript 进行严格类型检查；
+-   使用 ESLint 代码规范校验，Prettier stylelint 代码自动格式化工具，EditorConfig 代码风格统一工具
+-   React 版本 V18.0.0，全部采用函数化 Hooks 特性开发项目组件；
+-   采用 React-router5 工具 配置项目路由；
+-   采用 Mobx5 + Hooks 实现项目数据状态管理；
+-   封装 Axios 库实现与后台 http 请求交互；
+-   UI 库采用流行的 Ant Design Mobile 5.0 组件库；
 
 ## 目录结构
 
@@ -757,7 +757,7 @@ rules: {
 
 ### 2.Ant Design 的引入
 
-安装：yarn add antd --save @ant-design/icons
+安装：yarn add antd@4.14.0 --save @ant-design/icons
 
 ### 3.axios json-server 安装
 
@@ -765,3 +765,8 @@ json-server 是基于 node 封装的模拟服务器接口的工具，不存在�
 Access-Control-Allow-Origin 会以“\*”作为通配符，从而允许所有域都具有访问资源的权限。
 安装：yarn add axios
 npm install -g json-server
+
+### 4.react-tsparticles 粒子效果
+
+安装：yarn add react-tsparticles
+yarn add tsparticles

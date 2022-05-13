@@ -38,7 +38,9 @@ const iconList = {
 const SideMenu = () => {
     //创建状态来接收数据
     const [menu, setMenu] = useState([]);
-
+    const {
+        role: { rights },
+    } = JSON.parse(localStorage.getItem('token'));
     //获取数据
     useEffect(() => {
         axios
@@ -61,7 +63,7 @@ const SideMenu = () => {
 
     //判断是否存在pagepermisson的函数，用来判断是否渲染或者访问
     const checkPagePermission = (item) => {
-        return item.pagepermisson;
+        return item.pagepermisson && rights.includes(item.key);
     };
     //创建处理数据函数
     const renderMenu = (menuList) => {

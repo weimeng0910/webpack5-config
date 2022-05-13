@@ -49,46 +49,46 @@ const UserForm = forwardRef((props, ref) => {
     const { roleList, regionList } = props;
 
     //设置roleId的映射对象，因为roleId的value值是1，2，3在判断数据中使用此映射对象
-    const roleObj = {
-        1: 'superadmin',
-        2: 'admin',
-        3: 'editor',
-    };
+    // const roleObj = {
+    //     1: 'superadmin',
+    //     2: 'admin',
+    //     3: 'editor',
+    // };
     //定义添加或更新功能的选择框是否禁用的函数
-    const checkRegionDisabled = (item) => {
-        //判断是否创建
+    // const checkRegionDisabled = (item) => {
+    //     //判断是否创建
 
-        if (props.isUpdate) {
-            //判断是否是超级管理员
-            if (roleObj[roleId] === 'superadmin') {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            if (roleObj[roleId] === 'superadmin') {
-                return false;
-            } else {
-                return item.value !== region;
-            }
-        }
-    };
+    //     if (props.isUpdate) {
+    //         //判断是否是超级管理员
+    //         if (roleObj[roleId] === 'superadmin') {
+    //             return false;
+    //         } else {
+    //             return true;
+    //         }
+    //     } else {
+    //         if (roleObj[roleId] === 'superadmin') {
+    //             return false;
+    //         } else {
+    //             return item.value !== region;
+    //         }
+    //     }
+    // };
 
-    const checkRoleDisabled = (item) => {
-        if (props.isUpdate) {
-            if (roleObj[roleId] === 'superadmin') {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            if (roleObj[roleId] === 'superadmin') {
-                return false;
-            } else {
-                return roleObj[item.id] !== 'editor';
-            }
-        }
-    };
+    // const checkRoleDisabled = (item) => {
+    //     if (props.isUpdate) {
+    //         if (roleObj[roleId] === 'superadmin') {
+    //             return false;
+    //         } else {
+    //             return true;
+    //         }
+    //     } else {
+    //         if (roleObj[roleId] === 'superadmin') {
+    //             return false;
+    //         } else {
+    //             return roleObj[item.id] !== 'editor';
+    //         }
+    //     }
+    // };
     return (
         <Form ref={formRef} layout='vertical'>
             <Form.Item
@@ -137,7 +137,8 @@ const UserForm = forwardRef((props, ref) => {
                         <Option
                             value={item.value}
                             key={item.id}
-                            disabled={checkRegionDisabled(item)}>
+                            // disabled={checkRegionDisabled(item)}
+                        >
                             {item.title}
                         </Option>
                     ))}
@@ -171,7 +172,8 @@ const UserForm = forwardRef((props, ref) => {
                         <Option
                             value={item.id}
                             key={item.id}
-                            disabled={checkRoleDisabled(item)}>
+                            // disabled={checkRoleDisabled(item)}
+                        >
                             {item.roleName}
                         </Option>
                     ))}
