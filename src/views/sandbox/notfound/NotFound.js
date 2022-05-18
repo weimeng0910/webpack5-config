@@ -1,11 +1,7 @@
 import React from 'react';
 
 const Notfound = () => {
-  return (
-    <div>
-      notfound
-    </div>
-  );
-}
+    return <div>403 Nopermission</div>;
+};
 
 export default Notfound;

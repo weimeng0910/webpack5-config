@@ -84,7 +84,7 @@ const Rolelist = () => {
     };
     //获取角色列表的数据
     useEffect(() => {
-        axios.get('http://localhost:5000/role').then((res) => {
+        axios.get('http://localhost:5000/roles').then((res) => {
             setDataSource(res.data);
         });
     }, []);
