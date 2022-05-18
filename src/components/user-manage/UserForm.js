@@ -31,14 +31,16 @@ const UserForm = forwardRef((props, ref) => {
     useImperativeHandle(
         ref,
 
-        () => ({
-            //子组件定义内部函数 validateFields充许父组件访问这个方法，开放给父组件
-            //通过useImperativeHandle的Hook, 将父组件传入的ref和useImperativeHandle第二个参数返回的对象绑定到了一起
-            validateFields: () => formRef.current.validateFields(),
-            resetFields: () => formRef.current.resetFields(),
-            setFieldsValue,
-            setIsDisabled,
-        })
+        () => {
+            return {
+                //子组件定义内部函数 validateFields充许父组件访问这个方法，开放给父组件
+                //通过useImperativeHandle的Hook, 将父组件传入的ref和useImperativeHandle第二个参数返回的对象绑定到了一起
+                validateFields: () => formRef.current.validateFields(),
+                resetFields: () => formRef.current.resetFields(),
+                setFieldsValue,
+                setIsDisabled,
+            };
+        }
     );
     //重新封装setFieldsValue方法，开放给父组件
     const setFieldsValue = (v) => {

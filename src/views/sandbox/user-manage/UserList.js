@@ -16,7 +16,7 @@ const { confirm } = Modal;
 export default function UserList() {
     //定义父组件的Ref传递给子组件，穿透子组件获取子组件的表单属性
     const userListRef = useRef(null);
-    //const updateForm = useRef(null);
+    const addForm = useRef(null);
     //数据状态
     const [dataSource, setDataSource] = useState([]);
     //显示弹出表单的状态
@@ -210,8 +210,7 @@ export default function UserList() {
     const addFormOK = () => {
         //console.log(userListRef.current);
         //点击确定后，访问子组件开放给父组件的方法，从而获得form表单的value
-        //在父组件中, 调用Ref.current时, 实际上是useImperativeHandle第二个参数返回的对象
-        userListRef.current
+        addForm.current
             .validateFields()
             .then((value) => {
                 console.log(value);
@@ -219,7 +218,7 @@ export default function UserList() {
                 setIsAddVisible(false);
                 //重置表单
 
-                userListRef.current.resetFields();
+                addForm.current.resetFields();
 
                 //post到后端，生成id，再设置 datasource, 方便后面的删除和更新
                 axios
@@ -247,13 +246,20 @@ export default function UserList() {
                 console.log(err);
             });
     };
-
+    //弹出提交表单
+    const handleSubmit = () => {
+        setTimeout(() => {
+            setIsAddVisible(true);
+            //userListRef.current.resetFields();
+        }, 100);
+    };
     return (
         <>
             <Button
                 type='primary'
                 onClick={() => {
-                    setIsAddVisible(true);
+                    handleSubmit();
+                    //setIsAddVisible(true);
                 }}>
                 添加用户
             </Button>
@@ -275,13 +281,13 @@ export default function UserList() {
                 cancelText='取消'
                 onCancel={() => {
                     setIsAddVisible(false);
-                    userListRef.current.resetFields();
+                    addForm.current.resetFields();
                 }}
                 onOk={() => addFormOK()}>
                 <UserForm
                     roleList={roleList}
                     regionList={regionList}
-                    ref={userListRef}
+                    ref={addForm}
                 />
             </Modal>
             {/* 修改选中项弹出的模态框 */}
