@@ -770,3 +770,7 @@ npm install -g json-server
 
 安装：yarn add react-tsparticles
 yarn add tsparticles
+
+### 5. nprogress 导航条
+
+安装：yarn add nprogress

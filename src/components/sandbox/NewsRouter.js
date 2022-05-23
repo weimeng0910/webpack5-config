@@ -1,55 +1,124 @@
-import React from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 //引入路由
 import { Routes, Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
+
+//导入导航条组件
+import FancyRoute from '@/components/nprogress/FancyRoute';
 
 //引入二级组件
-import Home from '@/views/sandbox/home/Home';
-import UserList from '@/views/sandbox/user-manage/UserList';
-import RightList from '@/views/sandbox/right-manage/RightList';
-import RoleList from '@/views/sandbox/right-manage/RoleList';
-import NotFound from '@/views/sandbox/notfound/NotFound';
-import NewsAdd from '@/views/sandbox/news-manage/NewsAdd';
-import NewsDraft from '@/views/sandbox/news-manage/NewsDraft';
-import NewsCategory from '@/views/sandbox/news-manage/NewsCategory';
-import Audit from '@/views/sandbox/audit-manage/Audit';
-import AuditList from '@/views/sandbox/audit-manage/AuditList';
-import Unpublished from '@/views/sandbox/publish-manage/Unpublished';
-import Published from '@/views/sandbox/publish-manage/Published';
-import Sunset from '@/views/sandbox/publish-manage/Sunset';
+//Suspense 使得组件可以“等待”某些操作结束后，再进行渲染。目前，Suspense 仅支持的使用场景是：通过 React.lazy 动态加载组件。
+const Home = React.lazy(() => import('@/views/sandbox/home/Home'));
+
+const UserList = React.lazy(() =>
+    import('@/views/sandbox/user-manage/UserList')
+);
+
+const RightList = React.lazy(() =>
+    import('@/views/sandbox/right-manage/RightList')
+);
+
+const RoleList = React.lazy(() =>
+    import('@/views/sandbox/right-manage/RoleList')
+);
+
+const NotFound = React.lazy(() => import('@/views/sandbox/notfound/NotFound'));
+
+const NewsAdd = React.lazy(() => import('@/views/sandbox/news-manage/NewsAdd'));
+
+const NewsDraft = React.lazy(() =>
+    import('@/views/sandbox/news-manage/NewsDraft')
+);
+
+const NewsCategory = React.lazy(() =>
+    import('@/views/sandbox/news-manage/NewsCategory')
+);
+
+const Audit = React.lazy(() => import('@/views/sandbox/audit-manage/Audit'));
+
+const AuditList = React.lazy(() =>
+    import('@/views/sandbox/audit-manage/AuditList')
+);
+
+const Unpublished = React.lazy(() =>
+    import('@/views/sandbox/publish-manage/Unpublished')
+);
+
+const Published = React.lazy(() =>
+    import('@/views/sandbox/publish-manage/Published')
+);
+
+const Sunset = React.lazy(() =>
+    import('@/views/sandbox/publish-manage/Sunset')
+);
+
 //创建本地映射表
 const LocalRouterMap = {
-    '/home': Home,
-    '/user-manage/list': UserList,
-    '/right-manage/role/list': RoleList,
-    '/right-manage/right/list': RightList,
-    '/news-manage/add': NewsAdd,
-    '/news-manage/draft': NewsDraft,
-    '/news-manage/category': NewsCategory,
-    '/audit-manage/audit': Audit,
-    '/audit-manage/list': AuditList,
-    '/publish-manage/unpublished': Unpublished,
-    '/publish-manage/published': Published,
-    '/publish-manage/sunset': Sunset,
+    '/home': <Home />,
+    '/user-manage/list': <UserList />,
+    '/right-manage/role/list': <RoleList />,
+    '/right-manage/right/list': <RightList />,
+    '/news-manage/add': <NewsAdd />,
+    '/news-manage/draft': <NewsDraft />,
+    '/news-manage/category': <NewsCategory />,
+    '/audit-manage/audit': <Audit />,
+    '/audit-manage/list': <AuditList />,
+    '/publish-manage/unpublished': <Unpublished />,
+    '/publish-manage/published': <Published />,
+    '/publish-manage/sunset': <Sunset />,
 };
 
 export default function NewsRouter() {
+    //设置路由数据列表状态
+    const [BackRouteList, setBackRouteList] = useState([]);
+
+    //获取数据
+    useEffect(() => {
+        Promise.all([
+            axios.get('http://localhost:5000/rights'),
+            axios.get('http://localhost:5000/children'),
+        ]).then((res) => {
+            //console.log(res[0].data);
+            setBackRouteList([...res[0].data, ...res[1].data]);
+        });
+    }, []);
+    //获取登陆令牌的权限
+    const {
+        role: { rights },
+    } = JSON.parse(localStorage.getItem('token'));
+    //检查本地映射是存在路径并且检查权限开关是否开启
+    const checkRoute = (item) => {
+        return LocalRouterMap[item.key] && item.pagepermisson;
+    };
+    //检查当前用户登陆权限
+    const checkUserPermission = (item) => {
+        return rights.includes(item.key);
+    };
     return (
         <div>
-            <Routes>
-                {/* 添加index属性，可以达到二级页面重定向回首页功能 */}
-                <Route path='home' element={<Home />} />
-                <Route path='user-manage/list' element={<UserList />} />
-                <Route path='right-manage/right/list' element={<RightList />} />
-                <Route path='right-manage/role/list' element={<RoleList />} />
-                {/* router-v6下的定向方式 */}
-                {/* <Route path="*" element={<Navigate to="/home" />} /> */}
-                {/* 已经在V6中弃用 */}
-                {/* <Redirect to="/home" /> */}
-                {/* 如果进入二级页面后，路径只有"/"设置重定向页面 */}
-                <Route exact path='/' element={<Navigate to='/home' />} />
-                {/* 404页面 */}
-                <Route path='*' element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={<FancyRoute />}>
+                <Routes>
+                    {BackRouteList.map((item) => {
+                        if (checkRoute(item) && checkUserPermission(item)) {
+                            return (
+                                <Route
+                                    path={item.key}
+                                    key={item.key}
+                                    element={LocalRouterMap[item.key]}
+                                    exact={true}
+                                />
+                            );
+                        }
+                        return null;
+                    })}
+
+                    <Route exact path='/' element={<Navigate to='/home' />} />
+                    {/* 404页面 */}
+                    {BackRouteList.length > 0 && (
+                        <Route path='*' element={<NotFound />} />
+                    )}
+                </Routes>
+            </Suspense>
         </div>
     );
 }

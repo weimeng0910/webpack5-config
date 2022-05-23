@@ -3,9 +3,10 @@ import React from 'react';
 import { Layout } from 'antd';
 
 //引入样式
-
 import './NewsSandBox.css';
-
+// //引入导航条
+// import NProgress from 'nprogress';
+// import 'nprogress/nprogress.css';
 //引入左侧menu组件和top组件
 import Sidemenu from '@/components/sandbox/SideMenu';
 import TopHeader from '@/components/sandbox/TopHeader';
@@ -13,7 +14,11 @@ import NewsRouter from '@/components/sandbox/NewsRouter';
 
 const { Content } = Layout;
 
-const NewsSandBox = () => {
+export default function NewsSandBox() {
+    // NProgress.start();
+    // useEffect(() => {
+    //     NProgress.done();
+    // });
     return (
         <Layout>
             {/* 左侧菜单导航 */}
@@ -35,5 +40,4 @@ const NewsSandBox = () => {
             </Layout>
         </Layout>
     );
-};
-export default NewsSandBox;
+}
