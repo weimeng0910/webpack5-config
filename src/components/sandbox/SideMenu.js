@@ -43,11 +43,9 @@ const SideMenu = () => {
     } = JSON.parse(localStorage.getItem('token'));
     //获取数据
     useEffect(() => {
-        axios
-            .get('http://localhost:5000/rights?_embed=children')
-            .then((ref) => {
-                setMenu(ref.data);
-            });
+        axios.get('/rights?_embed=children').then((ref) => {
+            setMenu(ref.data);
+        });
     }, []);
 
     //编程方式导航（例如在表单提交之后），这个钩子会为您提供一个 API 来执行此操作

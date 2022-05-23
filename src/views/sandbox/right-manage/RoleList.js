@@ -80,21 +80,19 @@ const Rolelist = () => {
     const deleteMethod = (item) => {
         //console.log(item);
         setDataSource(dataSource.filter((data) => data.id !== item.id));
-        axios.delete(`http://localhost:5000/roles/${item.id}`);
+        axios.delete(`/roles/${item.id}`);
     };
     //获取角色列表的数据
     useEffect(() => {
-        axios.get('http://localhost:5000/roles').then((res) => {
+        axios.get('/roles').then((res) => {
             setDataSource(res.data);
         });
     }, []);
     //获取所有功能的数据
     useEffect(() => {
-        axios
-            .get('http://localhost:5000/rights?_embed=children')
-            .then((res) => {
-                setRightsList(res.data);
-            });
+        axios.get('/rights?_embed=children').then((res) => {
+            setRightsList(res.data);
+        });
     }, []);
 
     //模态框中点击确定后的处理
@@ -116,7 +114,7 @@ const Rolelist = () => {
         );
 
         //更新数据库中数据patch
-        axios.patch(`http://localhost:5000/role/${currentId}`, {
+        axios.patch(`/role/${currentId}`, {
             rights: currentRights,
         });
     };

@@ -16,21 +16,19 @@ export default function RoleList() {
     const [dataSource, setDataSource] = useState([]);
     //获取数据
     useEffect(() => {
-        axios
-            .get('http://localhost:5000/rights?_embed=children')
-            .then((res) => {
-                //对首页的没有children的处理
-                const list = res.data;
+        axios.get('/rights?_embed=children').then((res) => {
+            //对首页的没有children的处理
+            const list = res.data;
 
-                //遍历数组list的children字段设成空字符串
-                list.forEach((item) => {
-                    if (item.children.length === 0) {
-                        item.childern = '';
-                    }
-                });
-
-                setDataSource(list);
+            //遍历数组list的children字段设成空字符串
+            list.forEach((item) => {
+                if (item.children.length === 0) {
+                    item.childern = '';
+                }
             });
+
+            setDataSource(list);
+        });
     }, []);
     //表格条目
     const columns = [
@@ -100,11 +98,11 @@ export default function RoleList() {
         item.pagepermisson = item.pagepermisson === 1 ? 0 : 1;
         setDataSource([...dataSource]);
         if (item.grade === 1) {
-            axios.patch(`http://localhost:5000/rights/${item.id}`, {
+            axios.patch(`/rights/${item.id}`, {
                 pagepermisson: item.pagepermisson,
             });
         } else {
-            axios.patch(`http://localhost:5000/children/${item.id}`, {
+            axios.patch(`/children/${item.id}`, {
                 pagepermisson: item.pagepermisson,
             });
         }
@@ -130,14 +128,14 @@ export default function RoleList() {
         // 当前页面同步状态 + 后端同步
         if (item.grade === 1) {
             setDataSource(dataSource.filter((data) => data.id !== item.id));
-            axios.delete(`http://localhost:5000/rights/${item.id}`);
+            axios.delete(`/rights/${item.id}`);
         } else {
             let list = dataSource.filter((data) => data.id === item.rightId);
             list[0].children = list[0].children.filter(
                 (data) => data.id !== item.id
             );
             setDataSource([...dataSource]);
-            axios.delete(`http://localhost:5000/children/${item.id}`);
+            axios.delete(`/children/${item.id}`);
         }
     };
     return (

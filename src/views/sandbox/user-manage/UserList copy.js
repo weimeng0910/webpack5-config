@@ -41,7 +41,7 @@ export default function UserList() {
             2: 'admin',
             3: 'editor',
         };
-        axios.get('http://localhost:5000/users?_expand=role').then((res) => {
+        axios.get('/users?_expand=role').then((res) => {
             //对数据根据用户进行判定
             const list = res.data;
             setDataSource(
@@ -62,14 +62,14 @@ export default function UserList() {
 
     //表单中读取的区域的数据获得
     useEffect(() => {
-        axios.get('http://localhost:5000/regions').then((res) => {
+        axios.get('/regions').then((res) => {
             //console.log(res.data);
             setRegionList(res.data);
         });
     }, []);
     //表单中读取的角色的数据获得
     useEffect(() => {
-        axios.get('http://localhost:5000/roles').then((res) => {
+        axios.get('/roles').then((res) => {
             //console.log(res.data);
             setRoleList(res.data);
         });
@@ -170,10 +170,7 @@ export default function UserList() {
                     return item;
                 })
             );
-            axios.patch(
-                `http://localhost:5000/users/${currentState.id}`,
-                value
-            );
+            axios.patch(`/users/${currentState.id}`, value);
         });
     };
     //关闭角色的按钮处理函数
@@ -181,7 +178,7 @@ export default function UserList() {
         item.roleState = !item.roleState;
         setDataSource([...dataSource]);
         //更新数据
-        axios.patch(`http://localhost:5000/users/${item.id}`, {
+        axios.patch(`/users/${item.id}`, {
             roleState: item.roleState,
         });
     };
@@ -205,7 +202,7 @@ export default function UserList() {
         //console.log(item);
         // 当前页面同步状态 + 后端同步
         setDataSource(dataSource.filter((data) => data.id !== item.id));
-        axios.delete(`http://localhost:5000/users/${item.id}`);
+        axios.delete(`/users/${item.id}`);
     };
     //确定提交
     const addFormOK = () => {
@@ -223,7 +220,7 @@ export default function UserList() {
 
                 //post到后端，生成id，再设置 datasource, 方便后面的删除和更新
                 axios
-                    .post(`http://localhost:5000/users`, {
+                    .post(`/users`, {
                         //组装数据
                         ...value,
                         roleState: true,

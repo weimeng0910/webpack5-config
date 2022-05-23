@@ -6,7 +6,7 @@ import axios from 'axios';
 //导入导航条组件
 import FancyRoute from '@/components/nprogress/FancyRoute';
 
-//引入二级组件
+//引入二级组件,组件是动态加载的
 //Suspense 使得组件可以“等待”某些操作结束后，再进行渲染。目前，Suspense 仅支持的使用场景是：通过 React.lazy 动态加载组件。
 const Home = React.lazy(() => import('@/views/sandbox/home/Home'));
 
@@ -74,13 +74,12 @@ export default function NewsRouter() {
 
     //获取数据
     useEffect(() => {
-        Promise.all([
-            axios.get('http://localhost:5000/rights'),
-            axios.get('http://localhost:5000/children'),
-        ]).then((res) => {
-            //console.log(res[0].data);
-            setBackRouteList([...res[0].data, ...res[1].data]);
-        });
+        Promise.all([axios.get('/rights'), axios.get('/children')]).then(
+            (res) => {
+                //console.log(res[0].data);
+                setBackRouteList([...res[0].data, ...res[1].data]);
+            }
+        );
     }, []);
     //获取登陆令牌的权限
     const {
@@ -96,6 +95,7 @@ export default function NewsRouter() {
     };
     return (
         <div>
+            {/* 显示 <FancyRoute> 组件直至 Route 加载完成 */}
             <Suspense fallback={<FancyRoute />}>
                 <Routes>
                     {BackRouteList.map((item) => {
