@@ -6,7 +6,7 @@ import axios from 'axios';
 //导入导航条组件
 import FancyRoute from '@/components/nprogress/FancyRoute';
 
-//引入二级组件,组件是动态加载的
+//引入二级组件,组件是动态加载的，在Network的All中点击路由组件的才会加载，不点不加载，这样才会产生导航条的动画
 //Suspense 使得组件可以“等待”某些操作结束后，再进行渲染。目前，Suspense 仅支持的使用场景是：通过 React.lazy 动态加载组件。
 const Home = React.lazy(() => import('@/views/sandbox/home/Home'));
 
@@ -95,7 +95,12 @@ export default function NewsRouter() {
     };
     return (
         <div>
-            {/* 显示 <FancyRoute> 组件直至 Route 加载完成 */}
+            {/* 显示 <FancyRoute> 组件直至 Route 加载完成，然后应在 Suspense 组件中渲染 lazy 组件，
+            如此使得我们可以使用在等待加载 lazy 组件时做优雅降级（如 loading 指示器等）。
+              fallback 属性接受任何在组件加载过程中你想展示的 React 元素。
+              你可以将 Suspense 组件置于懒加载组件之上的任何位置。
+              你甚至可以用一个 Suspense 组件包裹多个懒加载组件。
+            */}
             <Suspense fallback={<FancyRoute />}>
                 <Routes>
                     {BackRouteList.map((item) => {

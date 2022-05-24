@@ -1,0 +1,30 @@
+/* step connector */
+.ant-steps-item-title::after {
+  border: solid rgb(65 64 66 / 10%) !important;
+}
+
+/* step */
+.ant-steps-item-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 3em;
+  height: 3em;
+}
+
+.ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {
+  border-color: #21D47E;
+  background-color: #21D47E;
+}
+
+/* size of step container */
+
+.ant-steps {
+  width: 100%;
+}
+
+.ant-steps-horizontal .ant-steps-label-horizontal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
