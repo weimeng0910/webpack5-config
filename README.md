@@ -774,3 +774,13 @@ yarn add tsparticles
 ### 5. nprogress 导航条
 
 安装：yarn add nprogress
+
+### 6.富文本框的引入 react-draft-wysiwyg
+
+1.安装：yarn add react-draft-wysiwyg draft-js
+
+2.安装用于将 DraftJS Editor 内容转换为纯 HTML 的库
+yarn add draftjs-to-html
+
+3.安装用于将纯 HTML 转换为 DraftJS 编辑器内容的库。构建以与 react-draft-wysiwyg 一起使用
+yarn add html-to-draftjs

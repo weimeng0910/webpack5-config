@@ -1,30 +1,56 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { PageHeader, Steps, Button, Form, Input, Select } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import {
+    PageHeader,
+    Steps,
+    Button,
+    Form,
+    Input,
+    Select,
+    message,
+    notification,
+} from 'antd';
 import style from './News.module.css';
 import './NewsAddIndex.css';
 import axios from 'axios';
+import NewsEditor from '@/components/news-manage/NewsEditor';
 const { Step } = Steps;
 const { Option } = Select;
 
 export default function NewsAdd() {
     const [current, setCurrent] = useState(0);
     const [categoryList, setCategoryList] = useState([]);
+    let navigate = useNavigate();
+    //保存文章标题和文章类型的值
+    const [formInfo, setformInfo] = useState({});
+    //表单组件向父组件传回来的值
+    const [content, setContent] = useState('');
 
+    //获取令牌中的用户数据
+    const User = JSON.parse(localStorage.getItem('token'));
+
+    //下一步的按钮方法
     const handleNext = () => {
         if (current === 0) {
             NewsForm.current
                 .validateFields()
                 .then((res) => {
-                    console.log(res);
+                    //console.log(res);
+                    setformInfo(res);
                     setCurrent(current + 1);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         } else {
-            setCurrent(current + 1);
+            if (content === '' || content.trim() === '<p></p>') {
+                message.error('新闻内容不能为空');
+            } else {
+                setCurrent(current + 1);
+            }
         }
     };
+    //上一步按钮处理函数
     const handlePrevious = () => {
         setCurrent(current - 1);
     };
@@ -42,7 +68,40 @@ export default function NewsAdd() {
             setCategoryList(res.data);
         });
     }, []);
+    //处理保存和草稿的方法
+    const handleSeve = (auditState) => {
+        axios
+            .post('/news', {
+                //组装数据
+                ...formInfo,
+                content: content,
+                region: User.region ? User.region : '全球',
+                author: User.username,
+                roleId: User.roleId,
+                auditState: auditState,
+                publishState: 0,
+                createTime: Date.now(),
+                star: 0,
+                view: 0,
+                // "publishTime": 0
+            })
+            .then(() => {
+                //navigate替代了props.history.push
+                navigate(
+                    auditState === 0
+                        ? '/news-manage/draft'
+                        : '/audit-manage/list'
+                );
 
+                notification.info({
+                    message: `通知`,
+                    description: `您可以到${
+                        auditState === 0 ? '草稿箱' : '审核列表'
+                    }中查看您的新闻`,
+                    placement: 'bottomRight',
+                });
+            });
+    };
     return (
         <div>
             <PageHeader
@@ -113,14 +172,27 @@ export default function NewsAdd() {
                     </Form>
                 </div>
 
-                <div className={current === 1 ? '' : style.active}>22222</div>
-                <div className={current === 2 ? '' : style.active}>3333</div>
+                <div
+                    style={{ height: '200px' }}
+                    className={current === 1 ? '' : style.active}>
+                    <NewsEditor
+                        getContent={(value) => {
+                            //console.log(value);
+                            setContent(value);
+                        }}
+                    />
+                </div>
+                <div className={current === 2 ? '' : style.active}></div>
             </div>
-            <div style={{ marginTop: '50px' }}>
+            <div style={{ marginTop: '150px' }}>
                 {current === 2 && (
                     <span>
-                        <Button type='primary'>保存草稿箱</Button>
-                        <Button danger>提交审核</Button>
+                        <Button type='primary' onClick={() => handleSeve(0)}>
+                            保存草稿箱
+                        </Button>
+                        <Button danger onClick={() => handleSeve(1)}>
+                            提交审核
+                        </Button>
                     </span>
                 )}
                 {current < 2 && (
