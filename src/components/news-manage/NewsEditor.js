@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
-import { convertToRaw } from 'draft-js';
+import React, { useState, useEffect } from 'react';
+import { convertToRaw, ContentState, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
-// import htmlToDraft from 'html-to-draftjs';
+import htmlToDraft from 'html-to-draftjs';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './NewsEditor.css';
 export default function NewsEditor(props) {
     const [editorState, setEditorState] = useState('');
-    // const onEditorStateChange = () => {
-    //     console.log('111');
-    // };
+    useEffect(() => {
+        //console.log(props.content);
+        //把 html转换成draftjs对象
+        const html = props.content;
+        if (html === undefined) return;
+        const contentBlock = htmlToDraft(html);
+        if (contentBlock) {
+            const contentState = ContentState.createFromBlockArray(
+                contentBlock.contentBlocks
+            );
+            const editorState = EditorState.createWithContent(contentState);
+            setEditorState(editorState);
+        }
+    }, [props.content]);
     return (
         <Editor
             style={{

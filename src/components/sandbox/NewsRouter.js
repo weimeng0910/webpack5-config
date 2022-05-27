@@ -51,7 +51,12 @@ const Published = React.lazy(() =>
 const Sunset = React.lazy(() =>
     import('@/views/sandbox/publish-manage/Sunset')
 );
-
+const NewsPreview = React.lazy(() =>
+    import('@/views/sandbox/news-manage/NewsPreview')
+);
+const NewsUpdate = React.lazy(() =>
+    import('@/views/sandbox/news-manage/NewsUpdate')
+);
 //创建本地映射表
 const LocalRouterMap = {
     '/home': <Home />,
@@ -66,6 +71,8 @@ const LocalRouterMap = {
     '/publish-manage/unpublished': <Unpublished />,
     '/publish-manage/published': <Published />,
     '/publish-manage/sunset': <Sunset />,
+    '/news-manage/preview/:id': <NewsPreview />,
+    '/news-manage/update/:id': <NewsUpdate />,
 };
 
 export default function NewsRouter() {
@@ -87,7 +94,10 @@ export default function NewsRouter() {
     } = JSON.parse(localStorage.getItem('token'));
     //检查本地映射是存在路径并且检查权限开关是否开启
     const checkRoute = (item) => {
-        return LocalRouterMap[item.key] && item.pagepermisson;
+        return (
+            LocalRouterMap[item.key] &&
+            (item.pagepermisson || item.routepermisson)
+        );
     };
     //检查当前用户登陆权限
     const checkUserPermission = (item) => {
