@@ -112,6 +112,7 @@ export default function AuditList() {
         axios
             .patch(`/news/${item.id}`, {
                 publishState: 2,
+                publishTime: Date.now(),
             })
             .then(() => {
                 navigate('/publish-manage/published');
