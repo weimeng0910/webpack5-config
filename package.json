@@ -72,6 +72,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@reduxjs/toolkit": "^1.8.2",
     "@tanem/react-nprogress": "^5.0.0",
     "antd": "4.14.0",
     "axios": "^0.26.1",
@@ -83,7 +84,10 @@
     "nodejs": "^0.0.0",
     "nprogress": "^0.2.0",
     "react-draft-wysiwyg": "^1.14.7",
+    "react-redux": "^8.0.2",
     "react-tsparticles": "^2.0.6",
+    "redux": "^4.2.0",
+    "redux-devtools": "^3.7.0",
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.50.0",
     "sass-loader": "^12.6.0",

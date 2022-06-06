@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
+//导入钩子用于连接redux获取状态和更改状态的方法
+import { useSelector } from 'react-redux';
+
 import {
     UserOutlined,
     VideoCameraOutlined,
@@ -36,6 +39,7 @@ const iconList = {
 };
 
 const SideMenu = () => {
+    const { isCollapsed } = useSelector((state) => state.collApsedReducer);
     //创建状态来接收数据
     const [menu, setMenu] = useState([]);
     const {
@@ -97,7 +101,7 @@ const SideMenu = () => {
         });
     };
     return (
-        <Sider trigger={null} collapsible collapsed={false}>
+        <Sider trigger={null} collapsible collapsed={isCollapsed}>
             <div
                 style={{
                     display: 'flex',

@@ -784,3 +784,7 @@ yarn add draftjs-to-html
 
 3.安装用于将纯 HTML 转换为 DraftJS 编辑器内容的库。构建以与 react-draft-wysiwyg 一起使用
 yarn add html-to-draftjs
+
+### 7.利用 redux react-redux 实现状态全局化
+
+安装：yarn add redux react-redux redux-devtools @reduxjs/toolkit

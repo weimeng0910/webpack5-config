@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Dropdown, Menu, Avatar } from 'antd';
 
+//导入钩子用于连接redux获取状态和更改状态的方法
+import { useDispatch, useSelector } from 'react-redux';
+//导入reducer
+import { changeCollapsedState } from '@/redux/CollapsedReducerSlice';
+//导入icon
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
@@ -11,11 +16,13 @@ import {
 const { Header } = Layout;
 
 export default function TopHeader() {
-    const [collapsed, setCollapsed] = useState(false);
+    //获取redux中保存的状态和方法
+    const dispatch = useDispatch();
+    const { isCollapsed } = useSelector((state) => state.collApsedReducer);
 
     //改变图标的函数
     const changeCollapsed = () => {
-        setCollapsed(!collapsed);
+        dispatch(changeCollapsedState());
     };
     const navigate = useNavigate();
     const {
@@ -41,7 +48,7 @@ export default function TopHeader() {
         <Header
             className='site-layout-background'
             style={{ padding: '16px  16px' }}>
-            {collapsed ? (
+            {isCollapsed ? (
                 <MenuUnfoldOutlined onClick={changeCollapsed} />
             ) : (
                 <MenuFoldOutlined onClick={changeCollapsed} />
