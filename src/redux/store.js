@@ -4,11 +4,8 @@
    configureStore 要求我们传入一个 reducer 参数。
 */
 import { configureStore } from '@reduxjs/toolkit';
-//导入reducer
-import collApsedReducer from './CollapsedReducerSlice';
-//创建store
+import rootReducers from './reducers'; // 引入 reducer 的集合
+// 实例化 store，全局唯一
 export const store = configureStore({
-    reducer: {
-        collApsedReducer,
-    },
+    reducer: rootReducers,
 });

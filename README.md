@@ -788,3 +788,7 @@ yarn add html-to-draftjs
 ### 7.利用 redux react-redux 实现状态全局化
 
 安装：yarn add redux react-redux redux-devtools @reduxjs/toolkit
+
+redux: 核心状态管理库。
+react-redux: 用于 React 框架的桥接层。
+@reduxjs/toolkit: 降低 Redux 使用难度的助手。

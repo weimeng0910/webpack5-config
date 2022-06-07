@@ -5,7 +5,7 @@ import { Layout, Dropdown, Menu, Avatar } from 'antd';
 //导入钩子用于连接redux获取状态和更改状态的方法
 import { useDispatch, useSelector } from 'react-redux';
 //导入reducer
-import { changeCollapsedState } from '@/redux/CollapsedReducerSlice';
+import { setCollapsedState } from '@/redux/modules/CollapsedReducerSlice';
 //导入icon
 import {
     MenuUnfoldOutlined,
@@ -17,12 +17,12 @@ const { Header } = Layout;
 
 export default function TopHeader() {
     //获取redux中保存的状态和方法
-    const dispatch = useDispatch();
-    const { isCollapsed } = useSelector((state) => state.collApsedReducer);
+    const dispatch = useDispatch(); // 获得 dispatch，结合 action 就可更新 state
+    const { isCollapsed } = useSelector((state) => state.collApsedReducer); // 读取 isCollapsed 值
 
     //改变图标的函数
     const changeCollapsed = () => {
-        dispatch(changeCollapsedState());
+        dispatch(setCollapsedState());
     };
     const navigate = useNavigate();
     const {
