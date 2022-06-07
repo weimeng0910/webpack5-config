@@ -19,8 +19,8 @@ const CollApsedReducerSlice = createSlice({
     //2.后期组件更新去dispatch使用action函数的的时候做为action函数的方法名
     //内置了imnutable.js插件
     reducers: {
-        setCollapsedState(state, action) {
-            console.log(state, action);
+        setCollapsedState(state) {
+            //console.log(state, action);
             state.isCollapsed = !state.isCollapsed;
         },
     },

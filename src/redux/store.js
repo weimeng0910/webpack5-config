@@ -6,6 +6,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducers from './reducers'; // 引入 reducer 的集合
 // 实例化 store，全局唯一
-export const store = configureStore({
+const store = configureStore({
     reducer: rootReducers,
 });
+// 默认导出 store，用于全局的 Provieder 消费
+export default store;

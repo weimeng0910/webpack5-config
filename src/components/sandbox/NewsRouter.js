@@ -2,6 +2,10 @@ import React, { useEffect, useState, Suspense } from 'react';
 //引入路由
 import { Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { Spin } from 'antd';
+
+//导入钩子用于连接redux获取状态和更改状态的方法
+import { useSelector } from 'react-redux';
 
 //导入导航条组件
 import FancyRoute from '@/components/nprogress/FancyRoute';
@@ -78,7 +82,8 @@ const LocalRouterMap = {
 export default function NewsRouter() {
     //设置路由数据列表状态
     const [BackRouteList, setBackRouteList] = useState([]);
-
+    const { loadingState } = useSelector((state) => state.LoadingReducer);
+    console.log('meng', loadingState);
     //获取数据
     useEffect(() => {
         Promise.all([axios.get('/rights'), axios.get('/children')]).then(
@@ -111,29 +116,35 @@ export default function NewsRouter() {
               你可以将 Suspense 组件置于懒加载组件之上的任何位置。
               你甚至可以用一个 Suspense 组件包裹多个懒加载组件。
             */}
-            <Suspense fallback={<FancyRoute />}>
-                <Routes>
-                    {BackRouteList.map((item) => {
-                        if (checkRoute(item) && checkUserPermission(item)) {
-                            return (
-                                <Route
-                                    path={item.key}
-                                    key={item.key}
-                                    element={LocalRouterMap[item.key]}
-                                    exact={true}
-                                />
-                            );
-                        }
-                        return null;
-                    })}
+            <Spin size='large' spinning={loadingState}>
+                <Suspense fallback={<FancyRoute />}>
+                    <Routes>
+                        {BackRouteList.map((item) => {
+                            if (checkRoute(item) && checkUserPermission(item)) {
+                                return (
+                                    <Route
+                                        path={item.key}
+                                        key={item.key}
+                                        element={LocalRouterMap[item.key]}
+                                        exact={true}
+                                    />
+                                );
+                            }
+                            return null;
+                        })}
 
-                    <Route exact path='/' element={<Navigate to='/home' />} />
-                    {/* 404页面 */}
-                    {BackRouteList.length > 0 && (
-                        <Route path='*' element={<NotFound />} />
-                    )}
-                </Routes>
-            </Suspense>
+                        <Route
+                            exact
+                            path='/'
+                            element={<Navigate to='/home' />}
+                        />
+                        {/* 404页面 */}
+                        {BackRouteList.length > 0 && (
+                            <Route path='*' element={<NotFound />} />
+                        )}
+                    </Routes>
+                </Suspense>
+            </Spin>
         </div>
     );
 }
